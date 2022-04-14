@@ -1,0 +1,35 @@
+.header {
+	height: 55px;
+	//border: 1px solid red;
+	//background-color: #f8efed;
+	//background-color: #e2e2e2;
+	background-color: #ffffff;
+	box-shadow: 0 5px 5px -5px black;
+
+	> hr {
+		position: relative;
+		background-color: #070d0f;
+		width: 100vw;
+		height: 5px;
+	}
+
+	.header_content {
+		margin: 0 auto;
+		max-width: 1200px;
+
+		padding: 5px 10px 0 10px;
+
+		display: flex;
+		flex-direction: row;
+		justify-content: space-between;
+
+		.nav_buttons,
+		.auth_buttons {
+			display: flex;
+			flex-direction: row;
+			> :last-child {
+				margin-left: 10px;
+			}
+		}
+	}
+}
