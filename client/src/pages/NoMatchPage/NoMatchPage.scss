@@ -1,0 +1,11 @@
+.no_match_page {
+	.test {
+		width: 600px;
+		height: 300px;
+		margin: 30px;
+		border: 1px solid red;
+		> * {
+			margin: 10px;
+		}
+	}
+}

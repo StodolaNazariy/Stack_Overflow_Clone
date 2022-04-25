@@ -1,11 +1,10 @@
 .button {
-	padding: 5px 10px;
-	font-size: 16px;
-	border-radius: 10px;
+	margin-top: 5px;
+	border-radius: 6px;
 	font-weight: 600;
-}
-
-.auth_btn {
-	background-color: rgb(185, 43, 39);
-	color: #ffffff;
+	text-align: center;
+	font-weight: 600;
+	font-size: 12px;
+	background: transparent;
+	cursor: pointer;
 }

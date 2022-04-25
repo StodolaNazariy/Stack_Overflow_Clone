@@ -13,18 +13,41 @@ body,
 	color: #070d0f;
 }
 
+*,
+*::after,
+*::before {
+	box-sizing: border-box;
+}
+
 code {
 	font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New', monospace;
 }
 
 .app {
 	background-color: rgb(246, 248, 250);
-
 	min-height: 100vh;
 	display: grid;
-	grid-template-rows: minmax(0px, 55px) auto 100px;
+	grid-template-rows: 3px 40px auto 100px;
 }
 
-.app > :nth-child(2) {
+.app > :nth-child(3) {
 	margin: 0 auto;
+	width: 100vw;
+	max-width: 1200px;
+}
+
+.base_line {
+	position: relative;
+	background-color: #1fc6c9;
+	width: 100vw;
+	height: 3px;
+}
+
+.flex_row {
+	display: flex;
+	flex-direction: row;
+}
+
+.color_test {
+	color: red;
 }

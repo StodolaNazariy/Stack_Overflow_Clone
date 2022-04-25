@@ -14,27 +14,29 @@
 	"plugins": ["react"],
 	"rules": {
 		"eqeqeq": "error",
-
 		"no-alert": "warn",
 		"no-await-in-loop": "warn",
-
 		"no-compare-neg-zero": "error",
 		"no-dupe-args": "error",
-
 		"no-empty": "error",
 		"no-empty-function": "error",
 		"no-eval": "error",
-
 		"no-magic-numbers": ["warn", { "ignoreArrayIndexes": true }],
 		"no-multiple-empty-lines": "error",
-
 		"no-new-symbol": "error",
-
 		"no-proto": "error",
-
 		"no-self-compare": "error",
 		"no-var": "warn",
-
+		"no-undef": "warn",
+		"no-unused-vars": "warn",
 		"react/prop-types": "off"
+
+		// "react/jsx-curly-brace-presence": [
+		// 	"error",
+		// 	{
+		// 		"props": "always",
+		// 		"children": "always"
+		// 	}
+		// ]
 	}
 }

@@ -1,19 +1,23 @@
 import React from 'react';
 import './Button.scss';
 
-const Button = ({ width = 200, value, type, onClick }) => {
-	const buttonStyle = `button ${type}_btn`;
+const buttonStyles = {
+	primary: 'primary_btn',
+	secondary: 'secondary_btn',
+	third: 'third_btn',
+};
+
+const Button = ({ width = 150, value, onClick, height = 25, type = 'primary' }) => {
+
+	const style = buttonStyles[type];
 
 	return (
-		<div className='button' style={{ width: width }}>
-			<input
-				type='button'
-				className={buttonStyle}
-				style={{ width: width }}
-				value={value}
-				onClick={onClick}
-			/>
-		</div>
+		<button
+			className={`button ${style}`}
+			style={{ width: width, height: height }}
+			onClick={onClick}>
+			{value}
+		</button>
 	);
 };
 

@@ -1,0 +1,44 @@
+.filter_tabs {
+	text-align: end;
+	display: flex;
+	justify-content: end;
+
+	.filter_tabs_container {
+		border-radius: 10px;
+		display: flex;
+		flex-direction: row;
+		margin-right: 10px;
+		overflow: hidden;
+	}
+}
+
+.f_tab {
+	padding: 0px 10px;
+	padding-top: 9px;
+	height: 40px;
+	font-size: 14px;
+	font-weight: 400;
+	text-align: center;
+}
+
+@media screen and (max-width: 540px) {
+	.filter_tabs {
+		text-align: center;
+		justify-content: center;
+		.filter_tabs_container {
+			margin-right: 0px;
+		}
+	}
+}
+
+@media screen and (max-width: 460px) {
+	.filter_tabs {
+		text-align: center;
+		justify-content: center;
+	}
+	.f_tab {
+		padding-left: 5px;
+		padding-right: 5px;
+		font-size: 13px;
+	}
+}
