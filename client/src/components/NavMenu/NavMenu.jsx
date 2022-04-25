@@ -1,8 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { useLocation } from 'react-router-dom';
 import ListIcon from '@mui/icons-material/List';
-
-import { NavMenuLink } from 'components';
+import NavMenuLink from './NavMenuLink/NavMenuLink';
 
 import './NavMenu.scss';
 
