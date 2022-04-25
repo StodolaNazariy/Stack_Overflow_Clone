@@ -1,6 +1,7 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { useNavigate } from 'react-router-dom';
-import { Button, FilterTabs } from 'components';
+import { Button } from 'components';
+import FilterTabs from './FilterTabs/FilterTabs';
 
 import './FIlterPanel.scss';
 

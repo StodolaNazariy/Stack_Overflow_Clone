@@ -2,7 +2,9 @@ import React, { useState, useRef, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 
 import './Header.scss';
-import { Button, MainLogo, NavMenu, OpenSearch } from 'components/index';
+import { Button, NavMenu } from 'components/index';
+import MainLogo from './MainLogo/MainLogo';
+import OpenSearch from './OpenSearch/OpenSearch';
 
 const Header = () => {
 	const [isHiddenSearch, setIsHiddenSearch] = useState(true);
