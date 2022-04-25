@@ -44,6 +44,9 @@ export const GlobalStyles = createGlobalStyle`
   .border_3{
     border: 1px solid ${({ theme }) => theme.third};
   }
+  .border_2{
+    border: 2px solid ${({ theme }) => theme.second};
+  }
 
   .bg_3 {
     background-color: ${({ theme }) => theme.third}
