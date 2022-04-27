@@ -4,5 +4,6 @@ import Footer from './Footer/Footer.jsx';
 import NavMenu from './NavMenu/NavMenu.jsx';
 import FilterPanel from './FilterPanel/FilterPanel.jsx';
 import QuestionShort from './QuestionShort/QuestionShort.jsx';
+import TextInput from './TextInput/TextInput.jsx';
 
-export { Button, Header, Footer, NavMenu, FilterPanel, QuestionShort };
+export { Button, Header, Footer, NavMenu, FilterPanel, QuestionShort, TextInput };

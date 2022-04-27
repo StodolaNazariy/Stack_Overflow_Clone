@@ -1,5 +1,11 @@
 const express = require('express');
+const cookieParser = require('cookie-parser');
 const cors = require('cors');
+
+const corsOptions = {
+	origin: 'http://localhost:3000',
+	credentials: true,
+};
 
 const { PORT } = require('./src/configs').Params;
 const { checkConnect } = require('./src/database/database');
@@ -8,7 +14,8 @@ const { mainRouter } = require('./src/routers');
 
 const app = express();
 
-app.use(cors());
+app.use(cors(corsOptions));
+app.use(cookieParser());
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 

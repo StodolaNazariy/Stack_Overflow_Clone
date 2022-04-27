@@ -7,7 +7,7 @@ export const questions = [
 		likes: 44,
 		tags: 'html css js',
 		title:
-			"Im a Barbie girl, in the Barbie world, Life in plastic, it's fantastic. You can brush my hair, undress me everywhere Imagination, life is your creation Come on, Barbie, let's go party",
+			"Im a Barbie girl, in the Barbie world, Life in plastic, it's fantastic. You can brush my hair, undress me everywhere Imagination, life is your",
 		createdAt: '2022-04-24T14:48:00.000Z',
 	},
 	{

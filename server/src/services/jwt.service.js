@@ -6,7 +6,7 @@ const { ACCESS_TOKEN_SECRET, REFRESH_TOKEN_SECRET } =
 module.exports = {
 	generateTokenPair: () => {
 		const access_token = jwt.sign({}, ACCESS_TOKEN_SECRET, {
-			expiresIn: '5m',
+			expiresIn: '15m',
 		});
 		const refresh_token = jwt.sign({}, REFRESH_TOKEN_SECRET, {
 			expiresIn: '31d',
