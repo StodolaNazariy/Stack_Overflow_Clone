@@ -31,6 +31,8 @@ module.exports = {
 			UserPreferences.create({ userId: user.id });
 			UserSettings.create({ userId: user.id });
 
+			// await emailService.sendMail('onepiece.nazar@gmail.com');
+
 			res.status(200).json(user);
 		} catch (e) {
 			next(e);
@@ -39,19 +41,18 @@ module.exports = {
 
 	loginUser: async (req, res, next) => {
 		try {
-			const { password, name } = req.body;
+			console.log('STUK TO LOGIN');
+
+			const { password, email } = req.body;
 
 			const user = await Users.findOne({
-				where: { name: name },
+				where: { email: email },
 				raw: true,
 				attributes: ['id', 'name', 'email', 'password'],
 			});
 
 			if (!user) {
-				throw new ErrorHandler(
-					404,
-					'User not found. Please check if the login is correct',
-				);
+				throw new ErrorHandler(404, 'User not found');
 			}
 
 			if (!(await passwordService.compare(password, user.password))) {
@@ -64,12 +65,15 @@ module.exports = {
 
 			delete user['password'];
 
-			console.log(user.email);
-			console.log('try send email');
-			await emailService.sendMail('onepiece.nazar@gmail.com');
-			console.log('we tried so hard');
+			res.cookie('refresh_token', tokenPair.refresh_token, {
+				httpOnly: true,
+				secure: true,
+			});
 
-			res.status(200).json({ tokens: tokenPair, user: user });
+			res.status(200).json({
+				access_token: tokenPair.access_token,
+				user: user,
+			});
 		} catch (e) {
 			next(e);
 		}

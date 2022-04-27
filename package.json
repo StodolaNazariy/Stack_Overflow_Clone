@@ -1,0 +1,16 @@
+{
+	"name": "stack_overflow_project",
+	"version": "1.0.0",
+	"description": "",
+	"main": "index.js",
+	"scripts": {
+		"server": "cd server && npm run develop",
+		"client": "cd client && npm start",
+		"start:all": "concurrently \"npm:server\" \"npm:client\""
+	},
+	"author": "Stodola Nazariy",
+	"license": "ISC",
+	"devDependencies": {
+		"concurrently": "^7.1.0"
+	}
+}

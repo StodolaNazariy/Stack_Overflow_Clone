@@ -1,0 +1,57 @@
+.my_profile_page {
+	.my_profile_avatar {
+		width: 300px;
+		margin: 20px auto;
+		display: flex;
+		flex-direction: column;
+		align-content: center;
+		> img {
+			margin: 0 auto;
+			border: 1px solid black;
+			width: 128px;
+			height: 128px;
+			border-radius: 50%;
+			overflow: hidden;
+		}
+		> input {
+			margin-top: 20px;
+		}
+	}
+	.my_profile_info {
+		width: 300px;
+		margin: 0 auto;
+		.my_profile_info_item {
+			display: flex;
+			flex-direction: column;
+			margin-top: 15px;
+			> span {
+				font-size: 12px;
+				font-weight: 300;
+			}
+			> :last-child {
+				margin-top: 5px;
+				width: calc(100% - 15px) !important;
+			}
+		}
+	}
+	.my_profile_about {
+		display: flex;
+		flex-direction: column;
+		width: 300px;
+		margin: 0 auto;
+		margin-top: 15px;
+		> span {
+			font-size: 12px;
+			font-weight: 300;
+		}
+		> textarea {
+			margin-top: 5px;
+			background: transparent;
+			border-radius: 10px;
+			padding: 5px;
+		}
+		> :last-child {
+			margin: 20px auto;
+		}
+	}
+}

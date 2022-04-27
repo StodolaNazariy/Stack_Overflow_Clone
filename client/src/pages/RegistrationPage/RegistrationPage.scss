@@ -1,0 +1,35 @@
+.reqistration_page {
+	width: 100vw;
+	height: 100vh;
+	.reqistration_page_form {
+		padding: 0px 20px;
+		display: flex;
+		flex-direction: column;
+		margin: 100px auto;
+		width: 360px;
+		height: 500px;
+		border-radius: 16px;
+		box-shadow: 0px 0px 10px 0px #76777c;
+		background: transparent;
+		.reqistration_page_form_title {
+			margin-top: 20px;
+			padding-bottom: 20px;
+			text-align: center;
+			font-size: 26px;
+			font-weight: 900;
+			border-bottom: 2px solid #76777c;
+			letter-spacing: 2px;
+		}
+
+		.reqistration_page_input {
+			margin-top: 15px !important;
+		}
+
+		.sign_up_link {
+			margin-top: 10px;
+			a {
+				font-weight: 500;
+			}
+		}
+	}
+}

@@ -1,5 +1,5 @@
-import React, { useState } from 'react';
-import { Routes, Route } from 'react-router-dom';
+import React, { useState, useEffect } from 'react';
+import { Routes, Route, useLocation } from 'react-router-dom';
 import { ThemeProvider } from 'styled-components';
 
 import { lightTheme, darkTheme, GlobalStyles } from 'config';
@@ -12,11 +12,20 @@ import {
 	SettingsPage,
 	TagsPage,
 	MyProfilePage,
+	LoginPage,
+	RegistrationPage,
 } from 'pages';
+
+const authURL = ['/sign-in', '/sign-up'];
 
 const App = () => {
 	const [theme, setTheme] = useState('light');
-	//console.log(setTheme);
+	const location = useLocation();
+	const [isAuthPage, setIsOnAuthPage] = useState(false);
+
+	useEffect(() => {
+		authURL.includes(location.pathname) ? setIsOnAuthPage(true) : setIsOnAuthPage(false);
+	}, [location]);
 
 	return (
 		<ThemeProvider theme={theme === 'light' ? lightTheme : darkTheme}>
@@ -24,9 +33,11 @@ const App = () => {
 			<div className='app app_bg'>
 				<hr className='base_line' />
 
-				<Header />
+				{isAuthPage ? null : <Header />}
 
 				<Routes>
+					<Route path='/sign-in' element={<LoginPage />} />
+					<Route path='/sign-up' element={<RegistrationPage />} />
 					<Route path='/' element={<HomePage />} />
 					<Route path='/questions' element={<HomePage />} />
 					<Route path='/tags' element={<TagsPage />} />
@@ -37,7 +48,7 @@ const App = () => {
 					<Route path='*' element={<NoMatchPage />} />
 				</Routes>
 
-				<Footer />
+				{isAuthPage ? null : <Footer />}
 			</div>
 		</ThemeProvider>
 	);
