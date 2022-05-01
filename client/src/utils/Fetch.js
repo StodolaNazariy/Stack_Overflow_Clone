@@ -1,6 +1,6 @@
 const SERVER_URI = 'http://localhost:5001';
 
-const Fetch = async (url, body = {}, method = 'GET', access = true) => {
+const Fetch = async (url, method = 'GET', body, access = true) => {
 	try {
 		const headers = new Headers();
 		headers.append('Content-Type', 'application/json');
@@ -22,8 +22,9 @@ const Fetch = async (url, body = {}, method = 'GET', access = true) => {
 		});
 		const data = await response.json();
 
-		if (data.access_token) {
+		if (data.access_token && access) {
 			localStorage.setItem('access_token', data.access_token);
+			delete data['access_token'];
 		}
 
 		return {

@@ -1,0 +1,17 @@
+.tags_page {
+	border: 1px solid red;
+	padding: 10px;
+	.tags_page_title {
+		//border: 1px solid red;
+		padding-left: 10px;
+		padding-bottom: 10px;
+		box-shadow: 0 4px 3px -2px gray;
+		font-weight: 500;
+		font-size: 20px;
+	}
+	.tags_page_list {
+		margin-top: 10px;
+		border: 1px solid red;
+		// display: flex;
+	}
+}

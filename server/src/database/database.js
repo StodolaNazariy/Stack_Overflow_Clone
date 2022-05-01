@@ -5,16 +5,18 @@ const { DB_DIALECT, DB_PASSWORD, DB_LOGIN, DB_HOST, DB_NAME } =
 
 const {
 	createAnswersModel,
-	createAuthModel,
 	createQuestionsModel,
+
+	createTagsModel,
+	createAuthModel,
+
 	createUserModel,
-	createUserPreferencesModel,
 	createUserProfileModel,
-	createUserSettingsModel,
 
 	createAnswersLikesModel,
 	createQuestionLikesModel,
-	createFollowingsModel,
+
+	createUserBookmarksModel,
 } = require('./models');
 
 const sequelize = new Sequelize(DB_NAME, DB_LOGIN, DB_PASSWORD, {
@@ -27,24 +29,17 @@ const Answers = createAnswersModel(sequelize);
 const Questions = createQuestionsModel(sequelize);
 const Users = createUserModel(sequelize);
 const UserProfile = createUserProfileModel(sequelize);
-const UserSettings = createUserSettingsModel(sequelize);
-const UserPreferences = createUserPreferencesModel(sequelize);
+const UserBookmarks = createUserBookmarksModel(sequelize);
+const Tags = createTagsModel(sequelize);
 
 // const QuestionLikes = createQuestionLikesModel(sequelize);
 // const AnswersLikes = createAnswersLikesModel(sequelize);
-// const UserFollowings = createFollowingsModel(sequelize);
 
 Users.hasOne(Auth, { onDelete: 'cascade' });
 Auth.belongsTo(Users);
 
 Users.hasOne(UserProfile, { onDelete: 'cascade' });
 UserProfile.belongsTo(Users);
-
-Users.hasOne(UserPreferences, { onDelete: 'cascade' });
-UserPreferences.belongsTo(Users);
-
-Users.hasOne(UserSettings, { onDelete: 'cascade' });
-UserSettings.belongsTo(Users);
 
 Users.hasMany(Answers, { onDelete: 'cascade' });
 Answers.belongsTo(Users);
@@ -80,7 +75,7 @@ module.exports = {
 
 	Users,
 	UserProfile,
-	UserSettings,
-	UserPreferences,
+	UserBookmarks,
+	Tags,
 	checkConnect,
 };

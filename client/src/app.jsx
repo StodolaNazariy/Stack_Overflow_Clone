@@ -14,6 +14,7 @@ import {
 	MyProfilePage,
 	LoginPage,
 	RegistrationPage,
+	CreateQuestionPage,
 } from 'pages';
 
 const authURL = ['/sign-in', '/sign-up'];
@@ -40,6 +41,7 @@ const App = () => {
 					<Route path='/sign-up' element={<RegistrationPage />} />
 					<Route path='/' element={<HomePage />} />
 					<Route path='/questions' element={<HomePage />} />
+					<Route path='/questions/create' element={<CreateQuestionPage />} />
 					<Route path='/tags' element={<TagsPage />} />
 					<Route path='/settings' element={<SettingsPage />} />
 					<Route path='/followings' element={<FollowingsPage />} />

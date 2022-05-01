@@ -1,15 +1,9 @@
 const ErrorHandler = require('../utils').ErrorHandler;
 const { jwtService, passwordService, emailService } = require('../services');
-const {
-	Users,
-	Auth,
-	UserPreferences,
-	UserSettings,
-	UserProfile,
-} = require('../database/database');
+const { Users, Auth, UserProfile } = require('../database/database');
 
-module.exports = {
-	createUser: async (req, res, next) => {
+class UserController {
+	async createUser(req, res, next) {
 		try {
 			const { password } = req.body;
 
@@ -18,18 +12,12 @@ module.exports = {
 			const user = await Users.create({
 				...req.body,
 				password: hashPassword,
-			}).catch(e =>
-				res.status(400).json({
-					message: `User with this ${Object.keys(
-						e.fields,
-					)} is already exist`,
-				}),
-			);
+			});
 
-			Auth.create({ userId: user.id });
-			UserProfile.create({ userId: user.id });
-			UserPreferences.create({ userId: user.id });
-			UserSettings.create({ userId: user.id });
+			if (user) {
+				Auth.create({ userId: user.id });
+				UserProfile.create({ userId: user.id });
+			}
 
 			// await emailService.sendMail('onepiece.nazar@gmail.com');
 
@@ -37,9 +25,9 @@ module.exports = {
 		} catch (e) {
 			next(e);
 		}
-	},
+	}
 
-	loginUser: async (req, res, next) => {
+	async loginUser(req, res, next) {
 		try {
 			console.log('STUK TO LOGIN');
 
@@ -77,5 +65,6 @@ module.exports = {
 		} catch (e) {
 			next(e);
 		}
-	},
-};
+	}
+}
+module.exports = new UserController();

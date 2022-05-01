@@ -1,0 +1,37 @@
+.tag_card {
+	display: inline-block;
+	margin: 3px 5px;
+	height: 23px;
+	position: relative;
+	.tag_card_title {
+		border-radius: 10px;
+
+		text-align: center;
+		font-size: 14px;
+		padding: 2px 6px;
+		cursor: pointer;
+	}
+
+	.tag_card_description {
+		margin-top: 2px;
+		display: none;
+		font-size: 11px;
+		width: 200px;
+		height: 200px;
+		padding: 5px;
+		border-radius: 10px;
+	}
+}
+
+.tag_card:hover {
+	.tag_card_title {
+		border-bottom: 0px;
+		border-bottom-left-radius: 0px;
+		border-bottom-right-radius: 0px;
+	}
+	.tag_card_description {
+		z-index: 4;
+		display: block;
+		position: absolute;
+	}
+}
