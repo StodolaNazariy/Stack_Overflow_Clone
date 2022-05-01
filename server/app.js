@@ -10,7 +10,7 @@ const corsOptions = {
 const { PORT } = require('./src/configs').Params;
 const { checkConnect } = require('./src/database/database');
 
-const { mainRouter } = require('./src/routers');
+const { mainRouter, tagsRouter, questionRouter } = require('./src/routers');
 
 const app = express();
 
@@ -20,6 +20,8 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
 app.use('/', mainRouter);
+app.use('/tags', tagsRouter);
+app.use('/questions', questionRouter);
 
 app.use(_mainErrorHandler);
 

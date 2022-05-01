@@ -18,7 +18,7 @@ const FilterPanel = () => {
 			<div className='f_btn'>
 				<Button
 					value='Ask question'
-					onClick={() => navigate('/add_question')}
+					onClick={() => navigate('/questions/create')}
 					type='secondary'
 					height='30px'
 				/>

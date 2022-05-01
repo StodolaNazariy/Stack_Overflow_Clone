@@ -7,6 +7,7 @@ import TagsPage from './TagsPage/TagsPage.jsx';
 import SettingsPage from './SettingsPage/SettingsPage.jsx';
 import LoginPage from './LoginPage/LoginPage.jsx';
 import RegistrationPage from './RegistrationPage/RegistrationPage.jsx';
+import CreateQuestionPage from './CreateQuestionPage/CreateQuestionPage.jsx';
 
 export {
 	MyProfilePage,
@@ -18,4 +19,5 @@ export {
 	FollowingsPage,
 	LoginPage,
 	RegistrationPage,
+	CreateQuestionPage,
 };
