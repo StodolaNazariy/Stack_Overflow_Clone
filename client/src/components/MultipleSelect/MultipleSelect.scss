@@ -1,0 +1,16 @@
+.multiple_select_container {
+	// div {
+	// 	background: transparent;
+	// }
+}
+
+.multiple_select {
+	z-index: 3;
+	width: 1180px;
+}
+
+@media screen and (max-width: 1200px) {
+	.multiple_select {
+		width: calc(100vw - 25px);
+	}
+}

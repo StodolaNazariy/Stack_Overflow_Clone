@@ -54,7 +54,7 @@ const checkConnect = async () => {
 	try {
 		await sequelize.authenticate();
 
-		// sequelize.sync({ force: true }).then(() => {
+		// sequelize.sync({ alter: true }).then(() => {
 		// 	console.log('Drop and re-sync db.');
 		// });
 

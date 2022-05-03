@@ -18,11 +18,11 @@ const createUserProfileModel = orm => {
 				type: DataTypes.STRING(50),
 				allowNull: true,
 			},
-			tags: {
-				type: DataTypes.STRING(50),
+			about: {
+				type: DataTypes.STRING,
 				allowNull: true,
 			},
-			about: {
+			avatar: {
 				type: DataTypes.STRING,
 				allowNull: true,
 			},

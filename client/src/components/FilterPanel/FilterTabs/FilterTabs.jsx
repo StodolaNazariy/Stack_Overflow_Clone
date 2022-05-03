@@ -1,19 +1,32 @@
 import React, { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, createSearchParams } from 'react-router-dom';
+import { useQueryParams } from 'utils';
 import './FilterTabs.scss';
 
 const FilterTabs = () => {
 	const [activeTab, setActiveTab] = useState('popular');
 	const navigate = useNavigate();
 
+	const [query] = useQueryParams();
+
+	console.log('this query ---> ', query);
+
 	const Tabs = ['popular', 'unanswered', 'newest', 'last week', 'last month'];
 	const activeStyle = 'bg_3';
 	const passiveStyle = 'color_1 border_2';
 
 	const handleTabClick = event => {
-		console.log(event.target.innerText);
-		setActiveTab(event.target.innerText);
-		navigate(`/questions?tab=${event.target.innerText}`);
+		const currentTab = event.target.innerText;
+		setActiveTab(currentTab);
+		const queryParams = createSearchParams({
+			...query,
+			tab: currentTab,
+		});
+
+		navigate({
+			pathname: '/questions',
+			search: `?${queryParams}`,
+		});
 	};
 
 	return (

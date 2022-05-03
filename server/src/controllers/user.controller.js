@@ -1,6 +1,7 @@
 const ErrorHandler = require('../utils').ErrorHandler;
 const { jwtService, passwordService, emailService } = require('../services');
 const { Users, Auth, UserProfile } = require('../database/database');
+const path = require('path');
 
 class UserController {
 	async createUser(req, res, next) {
@@ -66,5 +67,37 @@ class UserController {
 			next(e);
 		}
 	}
+
+	async updateProfile(req, res, next) {
+		try {
+			const { employement, residence, aboutMe } = req.body;
+			const { avatar } = req.files;
+			let fileName = 'vfdbdfndnfndfndf' + '.jpg';
+			avatar.mv(path.resolve(__dirname, '..', 'static', fileName));
+			// const book = await Book.create({
+			// 	name,
+			// 	author,
+			// 	description,
+			// 	price,
+			// 	genreId,
+			// 	image: fileName,
+			// });
+
+			const status = await UserProfile.update(
+				{
+					employement: employement,
+					residence: residence,
+					about: aboutMe,
+					avatar: fileName,
+				},
+				{ where: { userId: 2 } },
+			);
+
+			res.json(status);
+		} catch (e) {
+			next(e);
+		}
+	}
 }
+
 module.exports = new UserController();

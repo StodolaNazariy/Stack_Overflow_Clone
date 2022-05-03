@@ -6,6 +6,7 @@ import FilterPanel from './FilterPanel/FilterPanel.jsx';
 import QuestionShort from './QuestionShort/QuestionShort.jsx';
 import TextInput from './TextInput/TextInput.jsx';
 import TagCard from './TagCard/TagCard.jsx';
+import MultipleSelect from './MultipleSelect/MultipleSelect.jsx';
 
 export {
 	Button,
@@ -16,4 +17,5 @@ export {
 	QuestionShort,
 	TextInput,
 	TagCard,
+	MultipleSelect,
 };

@@ -1,5 +1,4 @@
 .tags_page {
-	border: 1px solid red;
 	padding: 10px;
 	.tags_page_title {
 		//border: 1px solid red;
@@ -10,8 +9,12 @@
 		font-size: 20px;
 	}
 	.tags_page_list {
+		padding: 0px 20px;
 		margin-top: 10px;
-		border: 1px solid red;
+		display: flex;
+		flex-wrap: wrap;
+		justify-content: center;
+
 		// display: flex;
 	}
 }

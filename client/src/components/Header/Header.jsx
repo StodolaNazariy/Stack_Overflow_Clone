@@ -1,5 +1,6 @@
 import React, { useState, useRef, useEffect } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, createSearchParams } from 'react-router-dom';
+import { useQueryParams } from 'utils';
 
 import './Header.scss';
 import { Button, NavMenu } from 'components/index';
@@ -11,6 +12,7 @@ const Header = () => {
 	const [search, setSearch] = useState('');
 	const Search = useRef(null);
 	const navigate = useNavigate();
+	const [query] = useQueryParams();
 
 	const handleOutsideClick = event => {
 		if (Search.current.contains(event.target)) {
@@ -33,9 +35,17 @@ const Header = () => {
 
 	const handleSubmitSearch = event => {
 		if (event.key === 'Enter') {
+			const queryParams = createSearchParams({
+				...query,
+				search: search,
+			});
+
+			navigate({
+				pathname: '/questions',
+				search: `?${queryParams}`,
+			});
 			setIsHiddenSearch(true);
 			setSearch('');
-			console.log('submit search ---> ', search);
 		}
 		if (event.key === 'Escape') {
 			setIsHiddenSearch(true);

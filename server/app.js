@@ -1,6 +1,8 @@
 const express = require('express');
+const fileUpload = require('express-fileupload');
 const cookieParser = require('cookie-parser');
 const cors = require('cors');
+const path = require('path');
 
 const corsOptions = {
 	origin: 'http://localhost:3000',
@@ -10,7 +12,12 @@ const corsOptions = {
 const { PORT } = require('./src/configs').Params;
 const { checkConnect } = require('./src/database/database');
 
-const { mainRouter, tagsRouter, questionRouter } = require('./src/routers');
+const {
+	mainRouter,
+	tagsRouter,
+	questionRouter,
+	userRouter,
+} = require('./src/routers');
 
 const app = express();
 
@@ -18,10 +25,13 @@ app.use(cors(corsOptions));
 app.use(cookieParser());
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
+app.use(express.static(path.resolve(__dirname, 'static')));
+app.use(fileUpload({}));
 
 app.use('/', mainRouter);
 app.use('/tags', tagsRouter);
 app.use('/questions', questionRouter);
+app.use('/users', userRouter);
 
 app.use(_mainErrorHandler);
 

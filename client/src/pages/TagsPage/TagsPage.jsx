@@ -17,16 +17,20 @@ const TagsPage = () => {
 		});
 	}, []);
 
+	const handleClick = tag => {
+		navigate({
+			pathname: '/questions',
+			search: `tag=${tag}`,
+		});
+	};
+
+	// `/questions?tag=${tag.name}`
 	return (
 		<div className='tags_page'>
 			<div className='tags_page_title color_1'>All tags: {count}</div>
 			<div className='tags_page_list'>
 				{tags.map(tag => (
-					<TagCard
-						key={tag.id}
-						tag={tag}
-						handleClick={() => navigate(`/questions?tag=${tag.name}`)}
-					/>
+					<TagCard key={tag.id} tag={tag} handleClick={() => handleClick(tag.name)} />
 				))}
 			</div>
 		</div>

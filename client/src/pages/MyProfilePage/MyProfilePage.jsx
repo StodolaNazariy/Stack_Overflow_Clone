@@ -4,24 +4,37 @@ import './MyProfilePage.scss';
 
 const MyProfilePage = () => {
 	const [avatar, setAvatar] = useState('');
+	const [name, setName] = useState('');
+	const [empoyement, setEmployement] = useState('');
+	const [residence, setResidence] = useState('');
+	const [aboutMe, setAboutMe] = useState('');
+
 	const default_avatar = process.env.PUBLIC_URL + '/icons/avatar_default.png';
 
 	const handleSave = () => {
-		console.log('SAVED');
 		const formData = new FormData();
-		formData.append('file', avatar);
-		console.log(formData);
+		console.log('SAVED');
+		formData.append('avatar', avatar);
+		formData.append('name', name);
+		formData.append('employement', empoyement);
+		formData.append('residence', residence);
+		formData.append('aboutMe', aboutMe);
+		//console.log(formData.get('employement'));
+		//console.log('##############################');
 	};
 
+	const handleAddFile = event => {
+		event.preventDefault();
+		setAvatar(event.target.files[0]);
+	};
+
+	// <img src={`http://localhost:5000/${book.image}`} alt="book-img" />
+    
 	return (
 		<div className='my_profile_page'>
 			<div className='my_profile_avatar'>
 				<img src={default_avatar} alt='' />
-				<input
-					type='file'
-					value={avatar}
-					onChange={event => setAvatar(event.target.files[0])}
-				/>
+				<input type='file' onChange={handleAddFile} />
 			</div>
 			<div className='my_profile_info'>
 				<div className='my_profile_info_item'>
@@ -30,11 +43,19 @@ const MyProfilePage = () => {
 				</div>
 				<div className='my_profile_info_item'>
 					<span className='color_1'>Employement</span>
-					<TextInput placeholder='Employement' />
+					<TextInput
+						placeholder='Employement'
+						value={empoyement}
+						onChange={event => setEmployement(event.target.value)}
+					/>
 				</div>
 				<div className='my_profile_info_item'>
 					<span className='color_1'>Residence</span>
-					<TextInput placeholder='Residence' />
+					<TextInput
+						placeholder='Residence'
+						value={residence}
+						onChange={event => setResidence(event.target.value)}
+					/>
 				</div>
 			</div>
 			<div className='my_profile_about'>
@@ -47,6 +68,8 @@ const MyProfilePage = () => {
 					className='color_1 border_1'
 					maxLength='160'
 					placeholder='About me'
+					value={aboutMe}
+					onChange={event => setAboutMe(event.target.value)}
 				/>
 				<Button value='Save' onClick={handleSave} type='secondary' height='40px' />
 			</div>
