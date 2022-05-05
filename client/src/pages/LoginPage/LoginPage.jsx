@@ -28,7 +28,7 @@ const LoginPage = () => {
 		},
 		validationSchema: validationSchema,
 		onSubmit: async values => {
-			const { data, status, errMessage } = await Fetch('/sign-in', 'POST', values, false);
+			const { data, status, errMessage } = await Fetch('/sign-in', 'POST', values);
 			if (status) {
 				localStorage.setItem('user_name', data.user.name);
 				localStorage.setItem('user_email', data.user.email);

@@ -3,6 +3,7 @@ const SagaActions = {
 	CREATE_TAG: 'CREATE_TAG',
 
 	GET_ALL_QUESTIONS: 'GET_ALL_QUESTIONS',
+	CREATE_QUESTION: 'CREATE_QUESTION',
 };
 
 export default SagaActions;

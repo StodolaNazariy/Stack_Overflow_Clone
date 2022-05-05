@@ -22,10 +22,6 @@ const createUserProfileModel = orm => {
 				type: DataTypes.STRING,
 				allowNull: true,
 			},
-			avatar: {
-				type: DataTypes.STRING,
-				allowNull: true,
-			},
 		},
 		{
 			timestamps: false,

@@ -20,4 +20,18 @@ export function* fetchQuestionsWatcher() {
 	yield takeLatest(SagaActions.GET_ALL_QUESTIONS, fetchQuestions);
 }
 
-export const questionSagas = [fetchQuestionsWatcher];
+const apiCreateQuestion = async payload => {
+	const { data } = await Fetch('/questions/create', 'POST', payload);
+	console.log('posted ----> ', data);
+	return data;
+};
+
+function* createQuestion(action) {
+	yield call(apiCreateQuestion, action.payload);
+}
+
+export function* createQuestionWatcher() {
+	yield takeLatest(SagaActions.CREATE_QUESTION, createQuestion);
+}
+
+export const questionSagas = [fetchQuestionsWatcher, createQuestionWatcher];

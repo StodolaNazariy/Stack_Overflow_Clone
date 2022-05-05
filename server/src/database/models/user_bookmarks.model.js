@@ -10,10 +10,6 @@ const createUserBookMarksModel = orm => {
 				primaryKey: true,
 				allowNull: false,
 			},
-			bookmarks: {
-				type: DataTypes.STRING,
-				allowNull: true,
-			},
 		},
 		{
 			timestamps: false,

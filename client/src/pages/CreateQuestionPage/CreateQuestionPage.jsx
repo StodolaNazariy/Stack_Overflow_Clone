@@ -1,20 +1,20 @@
-import React, { useState, useRef } from 'react';
+import React, { useState, useRef, useEffect } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
 import { Editor } from '@tinymce/tinymce-react';
 
 import { TextInput, MultipleSelect, Button } from 'components';
-
+import SagaActions from 'store/sagas/actions';
 import './CreateQuestionPage.scss';
-
-const options = [
-	{ value: 'chocolate', label: 'Chocolate' },
-	{ value: 'strawberry', label: 'Strawberry' },
-	{ value: 'vanilla', label: 'Vanilla' },
-];
 
 const joinTags = selected => {
 	const tags = selected.map(item => item.value);
-	console.log('tags ---->', tags);
 	return tags.join(' ');
+};
+
+const formatTagsToOptions = tags => {
+	return tags.map(tag => {
+		return { value: tag.name, label: tag.name };
+	});
 };
 
 const CreateQuestionPage = () => {
@@ -22,7 +22,15 @@ const CreateQuestionPage = () => {
 	const [questionTitle, setQuestionTitle] = useState('');
 	const [selectedTags, setSelectedTags] = useState(null);
 
+	const { tags } = useSelector(state => state.tags);
+	const dispatch = useDispatch();
 	const editorRef = useRef(null);
+
+	useEffect(() => {
+		dispatch({
+			type: SagaActions.GEG_ALL_TAGS,
+		});
+	}, []);
 
 	const handleChangeTags = selectedOption => {
 		setSelectedTags(selectedOption);
@@ -31,31 +39,24 @@ const CreateQuestionPage = () => {
 	const handleTitleChange = event => {
 		setQuestionTitle(event.target.value);
 	};
-	// const log = () => {
-	// 	if (editorRef.current) {
-	// 		console.log(editorRef.current.getContent());
-	// 	}
-	// };
 
 	const submitSubmit = () => {
-		console.log('########################################');
-		const formData = new FormData();
-		formData.append('tags', joinTags(selectedTags));
-		formData.append('title', questionTitle);
-		formData.append('content', questionContent);
-		console.log('SUBMIT');
-		console.log(formData.get('tags'));
-		console.log(formData.get('title'));
-		console.log(formData.get('content'));
+		const newQuestion = {
+			tags: joinTags(selectedTags),
+			title: questionTitle,
+			content: questionContent,
+		};
+		dispatch({
+			type: SagaActions.CREATE_QUESTION,
+			payload: newQuestion,
+		});
 	};
-
-	console.log(selectedTags);
 
 	return (
 		<div className='create_question_page'>
 			<MultipleSelect
 				value={selectedTags}
-				optionsToSelect={options}
+				optionsToSelect={formatTagsToOptions(tags)}
 				onChange={handleChangeTags}
 				placeholder='Tags...'
 			/>
@@ -88,7 +89,6 @@ const CreateQuestionPage = () => {
 				}}
 			/>
 
-			{/* <button onClick={log}>Log editor content</button> */}
 			<Button value='Publish' onClick={submitSubmit} type='secondary' height='35px' />
 		</div>
 	);
