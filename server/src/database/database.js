@@ -13,7 +13,6 @@ const {
 	createUserModel,
 	createUserProfileModel,
 
-	createAnswersLikesModel,
 	createQuestionLikesModel,
 
 	createUserBookmarksModel,
@@ -27,13 +26,14 @@ const sequelize = new Sequelize(DB_NAME, DB_LOGIN, DB_PASSWORD, {
 const Auth = createAuthModel(sequelize);
 const Answers = createAnswersModel(sequelize);
 const Questions = createQuestionsModel(sequelize);
+
 const Users = createUserModel(sequelize);
 const UserProfile = createUserProfileModel(sequelize);
 const UserBookmarks = createUserBookmarksModel(sequelize);
+
 const Tags = createTagsModel(sequelize);
 
-// const QuestionLikes = createQuestionLikesModel(sequelize);
-// const AnswersLikes = createAnswersLikesModel(sequelize);
+const QuestionLikes = createQuestionLikesModel(sequelize);
 
 Users.hasOne(Auth, { onDelete: 'cascade' });
 Auth.belongsTo(Users);
@@ -41,14 +41,23 @@ Auth.belongsTo(Users);
 Users.hasOne(UserProfile, { onDelete: 'cascade' });
 UserProfile.belongsTo(Users);
 
+Users.hasMany(UserBookmarks, { onDelete: 'cascade' });
+UserBookmarks.belongsTo(Users);
+
 Users.hasMany(Answers, { onDelete: 'cascade' });
 Answers.belongsTo(Users);
+
+Users.hasMany(QuestionLikes, { onDelete: 'cascade' });
+QuestionLikes.belongsTo(Users);
 
 Users.hasMany(Questions, { onDelete: 'cascade' });
 Questions.belongsTo(Users);
 
 Questions.hasMany(Answers, { onDelete: 'cascade' });
 Answers.belongsTo(Questions);
+
+Questions.hasMany(QuestionLikes, { onDelete: 'cascade' });
+QuestionLikes.belongsTo(Questions);
 
 const checkConnect = async () => {
 	try {
@@ -72,6 +81,7 @@ module.exports = {
 	Auth,
 	Answers,
 	Questions,
+	QuestionLikes,
 
 	Users,
 	UserProfile,

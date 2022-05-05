@@ -1,6 +1,6 @@
 const SERVER_URI = 'http://localhost:5001';
 
-const Fetch = async (url, method = 'GET', body, access = true) => {
+const Fetch = async (url, method = 'GET', body, access = false) => {
 	try {
 		const headers = new Headers();
 		headers.append('Content-Type', 'application/json');

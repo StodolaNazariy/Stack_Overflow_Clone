@@ -1,11 +1,23 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 
 import { FilterPanel, QuestionShort } from 'components';
-import { questions } from './test';
+import { Fetch } from 'utils';
 
 import './HomePage.scss';
 
 const HomePage = () => {
+	const [questions, setQuestions] = useState([]);
+	const endPoint = `${window.location.pathname}${window.location.search}`;
+
+	useEffect(async () => {
+		const { data, errMessage } = await Fetch(endPoint);
+		if (errMessage) {
+			return;
+		}
+		console.log('fetched questions -----> ', data);
+		setQuestions(data);
+	}, [endPoint]);
+
 	return (
 		<div className='home_page color_1'>
 			<FilterPanel />

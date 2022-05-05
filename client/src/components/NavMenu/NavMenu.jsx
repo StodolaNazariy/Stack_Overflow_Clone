@@ -5,7 +5,7 @@ import NavMenuLink from './NavMenuLink/NavMenuLink';
 
 import './NavMenu.scss';
 
-const navLinks = ['questions', 'tags', 'bookmarks', 'followings', 'profile', 'settings'];
+const navLinks = ['questions', 'tags', 'bookmarks', 'profile', 'settings'];
 
 const NavMenu = () => {
 	const [currentRoute, setCurrentRoute] = useState('');

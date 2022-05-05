@@ -24,6 +24,10 @@ const createUserModel = orm => {
 				allowNull: false,
 				unique: true,
 			},
+			avatar: {
+				type: DataTypes.STRING,
+				allowNull: true,
+			},
 		},
 		{
 			timestamps: true,

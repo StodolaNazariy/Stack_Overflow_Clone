@@ -24,7 +24,6 @@ const TagsPage = () => {
 		});
 	};
 
-	// `/questions?tag=${tag.name}`
 	return (
 		<div className='tags_page'>
 			<div className='tags_page_title color_1'>All tags: {count}</div>

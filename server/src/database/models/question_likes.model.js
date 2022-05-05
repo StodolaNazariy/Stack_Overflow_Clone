@@ -10,16 +10,16 @@ const createQuestionLikesModel = orm => {
 				primaryKey: true,
 				allowNull: false,
 			},
-			is_liked: {
-				type: DataTypes.BOOLEAN,
-				defaultValue: false,
-				allowNull: true,
-			},
-			is_dislikes: {
-				type: DataTypes.BOOLEAN,
-				defaultValue: false,
-				allowNull: true,
-			},
+			// is_liked: {
+			// 	type: DataTypes.BOOLEAN,
+			// 	defaultValue: false,
+			// 	allowNull: true,
+			// },
+			// is_dislikes: {
+			// 	type: DataTypes.BOOLEAN,
+			// 	defaultValue: false,
+			// 	allowNull: true,
+			// },
 		},
 		{
 			timestamps: true,

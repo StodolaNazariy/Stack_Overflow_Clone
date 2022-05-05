@@ -4,23 +4,22 @@ import { useQueryParams } from 'utils';
 import './FilterTabs.scss';
 
 const FilterTabs = () => {
-	const [activeTab, setActiveTab] = useState('popular');
+	const [activeTab, setActiveTab] = useState('newest');
 	const navigate = useNavigate();
 
 	const [query] = useQueryParams();
 
-	console.log('this query ---> ', query);
-
-	const Tabs = ['popular', 'unanswered', 'newest', 'last week', 'last month'];
+	const Tabs = ['newest', 'popular', 'unanswered', 'last week', 'last month'];
 	const activeStyle = 'bg_3';
 	const passiveStyle = 'color_1 border_2';
 
 	const handleTabClick = event => {
 		const currentTab = event.target.innerText;
 		setActiveTab(currentTab);
+
 		const queryParams = createSearchParams({
 			...query,
-			tab: currentTab,
+			tab: currentTab.split(' ').join('_'),
 		});
 
 		navigate({

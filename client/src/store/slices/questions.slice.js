@@ -12,6 +12,9 @@ const { reducer, actions } = createSlice({
 		fethedQuestions: (state, action) => {
 			state.questions = action.payload;
 		},
+		createQuestion: (state, action) => {
+			state.questions.push(action.payload);
+		},
 	},
 });
 

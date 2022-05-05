@@ -38,7 +38,6 @@ const RegistrationPage = () => {
 		validationSchema: validationSchema,
 		onSubmit: async values => {
 			delete values['passwordConfirmation'];
-			console.log('this req data ---> ', values);
 			const { data, status, errMessage } = await Fetch('/sign-up', 'POST', values, false);
 			if (status) {
 				navigate('/');

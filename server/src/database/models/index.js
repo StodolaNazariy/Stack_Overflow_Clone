@@ -9,7 +9,6 @@ module.exports = {
 	createAnswersModel: require('./answers.model'),
 
 	createQuestionLikesModel: require('./question_likes.model'),
-	createAnswersLikesModel: require('./answers_likes.model'),
 
 	createTagsModel: require('./tags.model'),
 };
