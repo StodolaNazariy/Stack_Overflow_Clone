@@ -1,6 +1,14 @@
+const { Sequelize } = require('sequelize');
 const ErrorHandler = require('../utils').ErrorHandler;
 const { jwtService, passwordService, emailService } = require('../services');
-const { Users, Auth, UserProfile } = require('../database/database');
+const {
+	Users,
+	Auth,
+	UserProfile,
+	Answers,
+	Questions,
+	QuestionLikes,
+} = require('../database/database');
 const path = require('path');
 
 class UserController {
@@ -62,6 +70,100 @@ class UserController {
 			res.status(200).json({
 				access_token: tokenPair.access_token,
 				user: user,
+			});
+		} catch (e) {
+			next(e);
+		}
+	}
+
+	async getUserProfileById(req, res, next) {
+		try {
+			const { id } = req.params;
+
+			const user = await Users.findOne({
+				subQuery: false,
+				where: { id: id },
+				attributes: {
+					exclude: ['createdAt', 'updatedAt', 'password', 'email'],
+					include: [
+						[
+							Sequelize.fn(
+								'COUNT',
+								Sequelize.col('questions.userId'),
+							),
+							'questionCount',
+						],
+						[
+							Sequelize.fn(
+								'COUNT',
+								Sequelize.col('answers.userId'),
+							),
+							'answersCount',
+						],
+					],
+				},
+				include: [
+					{
+						model: Questions,
+						attributes: [],
+					},
+					{
+						model: Answers,
+						attributes: [],
+					},
+					{
+						model: QuestionLikes,
+						attributes: [],
+					},
+				],
+				group: ['users.id'],
+				raw: true,
+			});
+
+			if (!user) {
+				throw new ErrorHandler(404, `User with id = ${id} not found`);
+			}
+
+			const user_profile = await Users.findOne({
+				where: { id: id },
+				attributes: [],
+				include: [
+					{
+						model: UserProfile,
+					},
+				],
+			});
+
+			const likesPerQuestion = await Questions.findAll({
+				subQuery: false,
+				attributes: [
+					[
+						Sequelize.fn(
+							'COUNT',
+							Sequelize.col('question_likes.questionId'),
+						),
+						'likesCount',
+					],
+				],
+				include: [
+					{
+						model: QuestionLikes,
+						attributes: [],
+					},
+				],
+				group: ['questions.id'],
+				raw: true,
+			});
+
+			const receivedLikes = likesPerQuestion.reduce(
+				(sum, current) => sum + current.likesCount,
+				0,
+			);
+
+			res.status(200).json({
+				user,
+				user_profile,
+				receivedLikes,
 			});
 		} catch (e) {
 			next(e);

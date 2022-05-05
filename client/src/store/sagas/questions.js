@@ -1,7 +1,7 @@
 import { call, put, takeLatest } from 'redux-saga/effects';
 
 import { Fetch } from 'utils';
-import { QuestionsCreator } from 'store/slices/questions.slice';
+import { QuestionsCreator } from 'store/slices';
 import SagaActions from './actions';
 
 const apiFetchQuestions = async () => {

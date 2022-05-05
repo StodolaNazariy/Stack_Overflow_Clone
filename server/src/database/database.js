@@ -47,6 +47,9 @@ UserBookmarks.belongsTo(Users);
 Users.hasMany(Answers, { onDelete: 'cascade' });
 Answers.belongsTo(Users);
 
+Users.hasMany(QuestionLikes, { onDelete: 'cascade' });
+QuestionLikes.belongsTo(Users);
+
 Users.hasMany(Questions, { onDelete: 'cascade' });
 Questions.belongsTo(Users);
 

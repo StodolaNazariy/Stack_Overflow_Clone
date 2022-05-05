@@ -5,7 +5,7 @@ import createSagaMiddleware from '@redux-saga/core';
 import SagaActions from './sagas/actions';
 import { rootSaga } from './sagas';
 
-import { questionsReducer, tagsReducer } from './slices';
+import { questionsReducer, tagsReducer, userReducer } from './slices';
 
 const sagaMiddleware = createSagaMiddleware();
 
@@ -13,6 +13,7 @@ const store = configureStore({
 	reducer: {
 		[REDUCER_NAMES.TAGS]: tagsReducer,
 		[REDUCER_NAMES.QUESTIONS]: questionsReducer,
+		[REDUCER_NAMES.USER_PROFILE]: userReducer,
 	},
 
 	middleware: getDefaultMiddleware =>
