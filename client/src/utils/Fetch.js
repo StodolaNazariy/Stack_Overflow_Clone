@@ -22,11 +22,6 @@ const Fetch = async (url, method = 'GET', body, access = false) => {
 		});
 		const data = await response.json();
 
-		if (data.access_token && access) {
-			localStorage.setItem('access_token', data.access_token);
-			delete data['access_token'];
-		}
-
 		return {
 			data,
 			errMessage: data.message,

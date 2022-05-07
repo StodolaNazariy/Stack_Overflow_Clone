@@ -1,18 +1,25 @@
 import React, { useState, useRef, useEffect } from 'react';
 import { useNavigate, createSearchParams } from 'react-router-dom';
+import { useSelector, useDispatch } from 'react-redux';
 import { useQueryParams } from 'utils';
 
-import './Header.scss';
 import { Button, NavMenu } from 'components/index';
 import MainLogo from './MainLogo/MainLogo';
 import OpenSearch from './OpenSearch/OpenSearch';
+import SagaActions from 'store/sagas/actions';
+import './Header.scss';
 
 const Header = () => {
 	const [isHiddenSearch, setIsHiddenSearch] = useState(true);
 	const [search, setSearch] = useState('');
-	const Search = useRef(null);
 	const navigate = useNavigate();
+	const dispatch = useDispatch();
+	const { isAuth } = useSelector(state => state.auth);
+	const Search = useRef(null);
 	const [query] = useQueryParams();
+
+	console.log('header is auth --> ', isAuth);
+	const userName = localStorage.getItem('user_name');
 
 	const handleOutsideClick = event => {
 		if (Search.current.contains(event.target)) {
@@ -61,6 +68,15 @@ const Header = () => {
 		}
 	};
 
+	const handleLogOut = () => {
+		console.log('logout');
+		localStorage.clear();
+		dispatch({
+			type: SagaActions.LOG_OUT,
+		});
+		navigate('/sign-in');
+	};
+
 	return (
 		<div className='header shadow_bottom_1'>
 			<div className='header_content'>
@@ -70,15 +86,23 @@ const Header = () => {
 					<OpenSearch onClick={handleShowingSearch} />
 				</div>
 
-				<div className='flex_row auth_btns' style={{ marginTop: '3px' }}>
-					<Button
-						value='Sign in'
-						width='80px'
-						onClick={() => navigate('/sign-in')}
-						type='primary'
-					/>
-					<Button value='Sign up' width='80px' onClick={() => navigate('/sign-up')} />
-				</div>
+				{isAuth ? (
+					<div className='flex_row auth_btns' style={{ marginTop: '3px' }}>
+						<div className='color_1 welcome_user'>Hello {userName}</div>
+						<Button value='Log out' width='80px' onClick={handleLogOut} type='primary' />
+					</div>
+				) : (
+					<div className='flex_row auth_btns' style={{ marginTop: '3px' }}>
+						<Button
+							value='Sign in'
+							width='80px'
+							onClick={() => navigate('/sign-in')}
+							type='primary'
+						/>
+						<Button value='Sign up' width='80px' onClick={() => navigate('/sign-up')} />
+					</div>
+				)}
+
 				<input
 					value={search}
 					ref={Search}

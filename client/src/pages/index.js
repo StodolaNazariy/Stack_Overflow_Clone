@@ -8,6 +8,7 @@ import LoginPage from './LoginPage/LoginPage.jsx';
 import RegistrationPage from './RegistrationPage/RegistrationPage.jsx';
 import CreateQuestionPage from './CreateQuestionPage/CreateQuestionPage.jsx';
 import UserPage from './UserPage/UserPage.jsx';
+import QuestionPage from './QuestionPage/QuestionPage.jsx';
 
 export {
 	MyProfilePage,
@@ -20,4 +21,5 @@ export {
 	RegistrationPage,
 	CreateQuestionPage,
 	UserPage,
+	QuestionPage,
 };

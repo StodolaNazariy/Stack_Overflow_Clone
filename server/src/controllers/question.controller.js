@@ -11,18 +11,15 @@ const {
 class QuestionsController {
 	async createQuestion(req, res, next) {
 		try {
-			console.log('#####');
-			console.log('---------------------------');
-			console.log('Stuk to create question -----> ', req.body);
-			console.log('---------------------------');
-			console.log('#####');
 			const { tags, title, content } = req.body;
+
 			const createdQuestion = await Questions.create({
 				tags: tags,
 				title: title,
 				content: content,
 				userId: 1,
 			});
+
 			res.status(200).json(createdQuestion);
 		} catch (e) {
 			next(e);
@@ -31,9 +28,6 @@ class QuestionsController {
 
 	async getAllQuestions(req, res, next) {
 		try {
-			console.log('-----------------------------Stuk to questions');
-			console.log(req.originalUrl);
-
 			const questions = await Questions.findAll({
 				subQuery: false,
 				attributes: {
@@ -74,6 +68,116 @@ class QuestionsController {
 			res.status(200).json(questions);
 		} catch (e) {
 			console.log(e);
+			next(e);
+		}
+	}
+
+	async getQuestionById(req, res, next) {
+		try {
+			const { id } = req.params;
+
+			if (!Number(id)) {
+				throw new ErrorHandler(400, 'Invalid id param');
+			}
+
+			const question = await Questions.findOne({
+				where: { id: id },
+			});
+
+			if (!question) {
+				throw new ErrorHandler(
+					404,
+					`Question wid id = ${id} not found`,
+				);
+			}
+
+			const questionStats = await Questions.findOne({
+				where: { id: id },
+				subQuery: false,
+				attributes: {
+					exclude: [
+						'updatedAt',
+						'content',
+						'id',
+						'title',
+						'tags',
+						'userId',
+						'createdAt',
+					],
+					include: [
+						[
+							Sequelize.fn(
+								'COUNT',
+								Sequelize.col('question_likes.questionId'),
+							),
+							'likesCount',
+						],
+						[
+							Sequelize.fn(
+								'COUNT',
+								Sequelize.col('answers.questionId'),
+							),
+							'answersCount',
+						],
+					],
+				},
+				include: [
+					{
+						model: QuestionLikes,
+						attributes: [],
+					},
+					{
+						model: Answers,
+						attributes: [],
+					},
+				],
+				group: ['questions.id'],
+			});
+
+			res.status(200).json({ question: question, stats: questionStats });
+		} catch (e) {
+			next(e);
+		}
+	}
+
+	async getAnswersByQuestion(req, res, next) {
+		try {
+			const { id } = req.params;
+
+			if (!Number(id)) {
+				throw new ErrorHandler(400, 'Invalid id param');
+			}
+
+			const answers = await Answers.findAll({
+				where: { questionId: id },
+				attributes: { exclude: ['userId', 'updatedAt'] },
+				include: [
+					{
+						model: Users,
+						attributes: ['id', 'name', 'avatar'],
+					},
+				],
+			});
+
+			res.status(200).json(answers);
+		} catch (e) {
+			next(e);
+		}
+	}
+
+	async createAnswer(req, res, next) {
+		try {
+			const { id } = req.params;
+			const { answer } = req.body;
+
+			const createdAnswer = await Answers.create({
+				answer: answer,
+				userId: 2,
+				questionId: id,
+			});
+
+			res.status(200).json(createdAnswer);
+		} catch (e) {
 			next(e);
 		}
 	}
