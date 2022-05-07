@@ -7,6 +7,9 @@ const SagaActions = {
 
 	GET_MY_PROFILE: 'GET_MY_PROFILE',
 	GET_USER_PROFILE: 'GET_USER_PROFILE',
+
+	DEFINE_AUTH: 'DEFINE_AUTH',
+	LOG_OUT: 'LOG_OUT',
 };
 
 export default SagaActions;

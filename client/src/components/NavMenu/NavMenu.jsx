@@ -1,15 +1,30 @@
 import React, { useState, useEffect } from 'react';
+import { useSelector } from 'react-redux';
 import { useLocation } from 'react-router-dom';
 import ListIcon from '@mui/icons-material/List';
 import NavMenuLink from './NavMenuLink/NavMenuLink';
 
 import './NavMenu.scss';
 
-const navLinks = ['questions', 'tags', 'bookmarks', 'profile', 'settings'];
+const navLinks = ['questions', 'tags'];
+const authorizedLinks = ['bookmarks', 'profile', 'settings'];
+const adminLinks = ['admin'];
 
 const NavMenu = () => {
 	const [currentRoute, setCurrentRoute] = useState('');
+	const { isAuth, role } = useSelector(state => state.auth);
 	const location = useLocation();
+
+	const navLinks = ['questions', 'tags'];
+	const authorizedLinks = ['bookmarks', 'profile', 'settings'];
+	const adminLinks = ['admin'];
+
+	if (isAuth) {
+		navLinks.push(...authorizedLinks);
+	}
+	if (role === 'Admin') {
+		navLinks.push(...adminLinks);
+	}
 
 	const checkActiveRoute = () => {
 		if (location.pathname === '/') {

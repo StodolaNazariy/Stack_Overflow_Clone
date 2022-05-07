@@ -1,6 +1,5 @@
 const { ErrorHandler } = require('../utils');
 const { Users, Auth } = require('../database/database');
-const { jwtService } = require('../services');
 
 const checkAuth = async (req, res, next) => {
 	try {
@@ -13,7 +12,7 @@ const checkAuth = async (req, res, next) => {
 
 		const token = req.get('Authorization');
 
-		const userByAccessToken = await Users.findOne({
+		const user = await Users.findOne({
 			attributes: ['id', 'email', 'name'],
 			include: [
 				{
@@ -25,40 +24,7 @@ const checkAuth = async (req, res, next) => {
 			raw: true,
 		});
 
-		if (userByAccessToken) {
-			req.currentUser = userByAccessToken;
-			next();
-		}
-
-		const userByRefreshToken = await Users.findOne({
-			attributes: ['id', 'email', 'name'],
-			include: [
-				{
-					model: Auth,
-					where: { refresh_token: req.cookies['refresh_token'] },
-					attributes: ['id', 'userId', 'role'],
-				},
-			],
-			raw: true,
-		});
-
-		if (!userByRefreshToken) {
-			throw new ErrorHandler(401, 'Invalid token');
-		}
-
-		const tokenPair = jwtService.generateTokenPair();
-
-		await Auth.update(
-			{ ...tokenPair },
-			{ where: { userId: userByRefreshToken.id } },
-		);
-
-		res.cookie('refresh_token', tokenPair.refresh_token, {
-			httpOnly: true,
-			secure: true,
-		});
-
-		req.access_token = tokenPair.access_token;
+		req.currentUser = user;
 		next();
 	} catch (e) {
 		next(e);

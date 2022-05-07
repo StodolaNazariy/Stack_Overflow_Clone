@@ -29,10 +29,14 @@ const LoginPage = () => {
 		validationSchema: validationSchema,
 		onSubmit: async values => {
 			const { data, status, errMessage } = await Fetch('/sign-in', 'POST', values);
+			localStorage.clear();
+			console.log(data);
 			if (status) {
 				localStorage.setItem('user_name', data.user.name);
 				localStorage.setItem('user_email', data.user.email);
 				localStorage.setItem('user_id', data.user.id);
+				localStorage.setItem('access_token', data.access_token);
+
 				navigate('/');
 				return;
 			} else {
