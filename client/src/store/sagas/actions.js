@@ -10,6 +10,8 @@ const SagaActions = {
 
 	DEFINE_AUTH: 'DEFINE_AUTH',
 	LOG_OUT: 'LOG_OUT',
+
+	CREATE_ANSWER: 'CREATE_ANSWER',
 };
 
 export default SagaActions;

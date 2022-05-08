@@ -34,4 +34,29 @@ export function* createQuestionWatcher() {
 	yield takeLatest(SagaActions.CREATE_QUESTION, createQuestion);
 }
 
-export const questionSagas = [fetchQuestionsWatcher, createQuestionWatcher];
+const apiFetchCreateAnswer = async payload => {
+	console.log('payload _ .', payload);
+	const { data } = await Fetch(
+		`/questions/answers/${payload.id}`,
+		'POST',
+		{ answer: payload.answer },
+		true,
+	);
+	console.log('created Answer --->', data);
+	return data;
+};
+
+function* fetchCreateAnswer(action) {
+	console.log('action _ .', action);
+	yield call(apiFetchCreateAnswer, action.payload);
+}
+
+export function* fetchCreateAnswerWatcher() {
+	yield takeLatest(SagaActions.CREATE_ANSWER, fetchCreateAnswer);
+}
+
+export const questionSagas = [
+	fetchQuestionsWatcher,
+	createQuestionWatcher,
+	fetchCreateAnswerWatcher,
+];

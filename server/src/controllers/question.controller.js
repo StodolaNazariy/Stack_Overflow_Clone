@@ -134,7 +134,16 @@ class QuestionsController {
 				group: ['questions.id'],
 			});
 
-			res.status(200).json({ question: question, stats: questionStats });
+			const author = await Users.findOne({
+				where: { id: question.userId },
+				attributes: ['id', 'avatar', 'name'],
+			});
+
+			res.status(200).json({
+				question: question,
+				stats: questionStats,
+				author: author,
+			});
 		} catch (e) {
 			next(e);
 		}
@@ -167,12 +176,17 @@ class QuestionsController {
 
 	async createAnswer(req, res, next) {
 		try {
+			console.log('###############################');
+			console.log('Stuk to create answer');
+			console.log('###############################');
 			const { id } = req.params;
 			const { answer } = req.body;
 
+			console.log('ansewer', answer);
+
 			const createdAnswer = await Answers.create({
 				answer: answer,
-				userId: 2,
+				userId: req.currentUser.id,
 				questionId: id,
 			});
 

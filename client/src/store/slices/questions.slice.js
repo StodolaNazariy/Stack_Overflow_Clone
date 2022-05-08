@@ -15,6 +15,9 @@ const { reducer, actions } = createSlice({
 		createQuestion: (state, action) => {
 			state.questions.push(action.payload);
 		},
+		createAnswer: (state, action) => {
+			return state.questions;
+		},
 	},
 });
 
