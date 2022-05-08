@@ -1,4 +1,4 @@
-const { Sequelize } = require('sequelize');
+const { Sequelize, Op } = require('sequelize');
 const { ErrorHandler } = require('../utils');
 const {
 	Questions,
@@ -28,8 +28,40 @@ class QuestionsController {
 
 	async getAllQuestions(req, res, next) {
 		try {
+			console.log('STUK TO GET QUESTIONS');
+			console.log(req.originalUrl);
+			console.log(req.query);
+
+			const { search, tag, tab } = req.query;
+
+			const checkTab = tab => {
+				const tabParam = {
+					newest: ['id', 'DESC'],
+					popular: [[Sequelize.col('likesCount'), 'DESC']],
+					unanswered: [[Sequelize.col('answersCount'), 'ASC']],
+				};
+
+				return tabParam[tab] || ['id', 'DESC'];
+			};
+
+			const tabParam = checkTab(tab);
+			console.log({ tabParam });
+
+			const searchParam = search ? `%${search}%` : '%%';
+			const tagsParam = tag ? `%${tag}%` : '%%';
+
 			const questions = await Questions.findAll({
+				where: {
+					title: {
+						[Op.like]: searchParam,
+					},
+					tags: {
+						[Op.like]: tagsParam,
+					},
+				},
 				subQuery: false,
+				order: [tabParam],
+
 				attributes: {
 					exclude: ['updatedAt', 'content'],
 					include: [
@@ -49,6 +81,7 @@ class QuestionsController {
 						],
 					],
 				},
+
 				include: [
 					{
 						model: Users,

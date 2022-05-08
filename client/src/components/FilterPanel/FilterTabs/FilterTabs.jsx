@@ -9,7 +9,7 @@ const FilterTabs = () => {
 
 	const [query] = useQueryParams();
 
-	const Tabs = ['newest', 'popular', 'unanswered', 'last week', 'last month'];
+	const Tabs = ['newest', 'popular', 'unanswered'];
 	const activeStyle = 'bg_3';
 	const passiveStyle = 'color_1 border_2';
 

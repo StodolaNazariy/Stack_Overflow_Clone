@@ -203,15 +203,8 @@ class UserController {
 
 	async defineUserAuth(req, res, next) {
 		try {
-			console.log('---------------------------------');
-			console.log(' ');
-			console.log('Stuk to DEFINE USER');
-			console.log(' ');
-			console.log(req.cookies['refresh_token']);
-			console.log('---------------------------------');
-
+			console.log('STUK TO DEFINE USER');
 			const token = req.get('Authorization');
-			console.log('token', token);
 
 			if (!token) {
 				throw new ErrorHandler(401, 'No Access token');
@@ -228,10 +221,9 @@ class UserController {
 						attributes: ['id', 'userId', 'role'],
 					},
 				],
-				// raw: true,
 			});
 
-			console.log('POINT 2', userByAccessToken);
+			console.log('POINT 2');
 
 			if (userByAccessToken) {
 				const { id, email, name, auth } = userByAccessToken;
@@ -266,7 +258,10 @@ class UserController {
 
 			console.log('POINT 5');
 
-			if (!userByRefreshToken || !userByAccessToken['auth.access_token']) {
+			if (
+				!userByRefreshToken ||
+				!userByAccessToken['auth.access_token']
+			) {
 				throw new ErrorHandler(401, 'Unauthorized');
 			}
 
