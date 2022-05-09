@@ -1,5 +1,6 @@
 import React, { useState, useRef, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
+import { useNavigate } from 'react-router-dom';
 import { Editor } from '@tinymce/tinymce-react';
 
 import { TextInput, MultipleSelect, Button } from 'components';
@@ -20,10 +21,11 @@ const formatTagsToOptions = tags => {
 const CreateQuestionPage = () => {
 	const [questionContent, setQuestionContent] = useState('');
 	const [questionTitle, setQuestionTitle] = useState('');
-	const [selectedTags, setSelectedTags] = useState(null);
+	const [selectedTags, setSelectedTags] = useState([]);
 
 	const { tags } = useSelector(state => state.tags);
 	const dispatch = useDispatch();
+	const navigate = useNavigate();
 	const editorRef = useRef(null);
 
 	useEffect(() => {
@@ -50,6 +52,7 @@ const CreateQuestionPage = () => {
 			type: SagaActions.CREATE_QUESTION,
 			payload: newQuestion,
 		});
+		navigate('/');
 	};
 
 	return (
@@ -61,10 +64,11 @@ const CreateQuestionPage = () => {
 				placeholder='Tags...'
 			/>
 			<TextInput
-				placeholder='Title'
+				placeholder='Title...'
 				value={questionTitle}
 				onChange={handleTitleChange}
 				maxLength={100}
+				styles='text_input_title'
 			/>
 			<Editor
 				onInit={(evt, editor) => (editorRef.current = editor)}

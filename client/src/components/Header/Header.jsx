@@ -22,11 +22,8 @@ const Header = () => {
 	const userName = localStorage.getItem('user_name');
 
 	const handleOutsideClick = event => {
-		if (Search.current.contains(event.target)) {
-			console.log('click on');
-		} else {
-			setIsHiddenSearch(true);
-		}
+		event.stopPropagation();
+		setIsHiddenSearch(true);
 	};
 
 	useEffect(() => {

@@ -21,7 +21,7 @@ export function* fetchQuestionsWatcher() {
 }
 
 const apiCreateQuestion = async payload => {
-	const { data } = await Fetch('/questions/create', 'POST', payload);
+	const { data } = await Fetch('/questions/create', 'POST', payload, true);
 	console.log('posted ----> ', data);
 	return data;
 };

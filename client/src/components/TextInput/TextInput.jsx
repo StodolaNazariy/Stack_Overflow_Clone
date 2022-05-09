@@ -14,10 +14,10 @@ const TextInput = ({
 	return (
 		<input
 			type='text'
-			className={`custom_text_input border_1 color_1 ${styles}`}
+			className={`custom_text_input ${styles}`}
 			value={value}
 			onChange={onChange}
-			style={{ width: `${width}px`, height: `${height}px` }}
+			// style={{ width: `${width}px`, height: `${height}px` }}
 			placeholder={placeholder}
 			maxLength={maxLength}
 			disabled={disabled}

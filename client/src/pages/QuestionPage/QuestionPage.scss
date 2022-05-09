@@ -1,5 +1,10 @@
 .question_page {
+	width: 100%;
+	display: flex;
+	justify-content: center;
+	padding-bottom: 40px;
 	.question_page_question {
+		padding-right: 20px;
 		.question_full {
 			margin: 10px 5px;
 			.question_full_title {
@@ -92,12 +97,10 @@
 		}
 	}
 	.create_new_answer {
-		padding: 20px 20px;
-		> div,
-		> button,
-		> input {
-			margin: 5px 10px;
-			max-height: 400px;
+		margin-left: 50px;
+		margin-top: 20px;
+		> :last-child {
+			margin-top: 20px;
 		}
 	}
 }

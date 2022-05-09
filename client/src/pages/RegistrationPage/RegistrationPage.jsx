@@ -40,7 +40,7 @@ const RegistrationPage = () => {
 			delete values['passwordConfirmation'];
 			const { data, status, errMessage } = await Fetch('/sign-up', 'POST', values, false);
 			if (status) {
-				navigate('/');
+				navigate('/sign-in');
 				return;
 			} else {
 				alert(errMessage);
@@ -100,7 +100,7 @@ const RegistrationPage = () => {
 					}
 				/>
 
-				<div className='reqistration_page_input'>
+				<div className='reqistration_page_submit'>
 					<Button value='Submit' width='320px' type='secondary' height='40px' />
 				</div>
 

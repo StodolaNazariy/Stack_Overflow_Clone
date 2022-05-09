@@ -22,7 +22,6 @@ const QuestionShort = ({
 	const Tags = tags.split(' ');
 
 	const handleNavigateToAuthor = event => {
-		event.stopPropagation();
 		navigate(`/users/${userId}`);
 	};
 
@@ -31,7 +30,7 @@ const QuestionShort = ({
 	};
 
 	return (
-		<div className='question_short border_2'>
+		<div className='question_short shadow_bottom_1'>
 			<div className='question_short_info'>
 				<div className='qsi_user'>
 					<img

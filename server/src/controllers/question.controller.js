@@ -17,7 +17,7 @@ class QuestionsController {
 				tags: tags,
 				title: title,
 				content: content,
-				userId: 1,
+				userId: req.currentUser.id,
 			});
 
 			res.status(200).json(createdQuestion);
@@ -224,6 +224,17 @@ class QuestionsController {
 			});
 
 			res.status(200).json(createdAnswer);
+		} catch (e) {
+			next(e);
+		}
+	}
+
+	async likeQuestion(req, res, next) {
+		try {
+			const [like, created] = await QuestionLikes.findOrCreate({
+				where: { userId: 2, questionId: 2 },
+			});
+			res.json({ done: true });
 		} catch (e) {
 			next(e);
 		}

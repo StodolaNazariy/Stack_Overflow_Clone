@@ -5,3 +5,19 @@
 	font-size: 16px;
 	padding: 5px;
 }
+
+.input_size_standard {
+	width: 200px;
+	height: 30px;
+	border: 2px solid #e6e8e9;
+	color: #e6e8e9;
+}
+
+.text_input_title {
+	background-color: #e6e8e9;
+	color: #2c3339;
+	border-radius: 6px;
+	font-size: 17px;
+	padding: 9px;
+	width: calc(100% - 40px);
+}

@@ -7,6 +7,7 @@ router.get('/', questionController.getAllQuestions);
 router.get('/:id', questionController.getQuestionById);
 router.get('/answers/:id', questionController.getAnswersByQuestion);
 router.post('/answers/:id', checkAuth, questionController.createAnswer);
-router.post('/create', questionController.createQuestion);
+router.post('/create', checkAuth, questionController.createQuestion);
+router.post('/like', questionController.likeQuestion);
 
 module.exports = router;

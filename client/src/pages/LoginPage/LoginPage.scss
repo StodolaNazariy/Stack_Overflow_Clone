@@ -1,6 +1,6 @@
 .login_page {
-	width: 100vw;
-	height: 100vh;
+	padding: 10px;
+
 	.login_page_form {
 		padding: 0px 20px;
 		display: flex;
@@ -20,9 +20,23 @@
 			border-bottom: 2px solid #76777c;
 			letter-spacing: 2px;
 		}
+
 		> :nth-child(2),
 		> :nth-child(3) {
 			margin-top: 20px;
+			> *,
+			input,
+			div {
+				background: transparent !important;
+				color: #e6e8e9 !important;
+			}
+			input:-webkit-autofill,
+			input:-webkit-autofill:hover,
+			input:-webkit-autofill:focus,
+			input:-webkit-autofill:active {
+				transition: 5000s ease-in-out 0s;
+				background: transparent !important;
+			}
 		}
 		.forgot_password_link {
 			margin-top: 20px;

@@ -85,34 +85,10 @@ class UserController {
 				where: { id: id },
 				attributes: {
 					exclude: ['createdAt', 'updatedAt', 'password', 'email'],
-					include: [
-						[
-							Sequelize.fn(
-								'COUNT',
-								Sequelize.col('questions.userId'),
-							),
-							'questionCount',
-						],
-						[
-							Sequelize.fn(
-								'COUNT',
-								Sequelize.col('answers.userId'),
-							),
-							'answersCount',
-						],
-					],
 				},
 				include: [
 					{
 						model: Questions,
-						attributes: [],
-					},
-					{
-						model: Answers,
-						attributes: [],
-					},
-					{
-						model: QuestionLikes,
 						attributes: [],
 					},
 				],
@@ -124,17 +100,12 @@ class UserController {
 				throw new ErrorHandler(404, `User with id = ${id} not found`);
 			}
 
-			const user_profile = await Users.findOne({
-				where: { id: id },
-				attributes: [],
-				include: [
-					{
-						model: UserProfile,
-					},
-				],
+			const user_profile = await UserProfile.findOne({
+				where: { userId: user.id },
 			});
 
 			const likesPerQuestion = await Questions.findAll({
+				where: { userId: user.id },
 				subQuery: false,
 				attributes: [
 					[
@@ -155,15 +126,25 @@ class UserController {
 				raw: true,
 			});
 
-			const receivedLikes = likesPerQuestion.reduce(
+			const likesCount = likesPerQuestion.reduce(
 				(sum, current) => sum + current.likesCount,
 				0,
 			);
 
+			const questions = await Questions.findAndCountAll({
+				where: { userId: user.id },
+			});
+
+			const answers = await Answers.findAndCountAll({
+				where: { userId: user.id },
+			});
+
 			res.status(200).json({
 				user,
 				user_profile,
-				receivedLikes,
+				likesCount,
+				questionsCount: questions.count,
+				answersCount: answers.count,
 			});
 		} catch (e) {
 			next(e);
@@ -173,9 +154,9 @@ class UserController {
 	async updateProfile(req, res, next) {
 		try {
 			const { employement, residence, aboutMe } = req.body;
-			const { avatar } = req.files;
-			let fileName = 'vfdbdfndnfndfndf' + '.jpg';
-			avatar.mv(path.resolve(__dirname, '..', 'static', fileName));
+			// const { avatar } = req.files;
+			// let fileName = 'vfdbdfndnfndfndf' + '.jpg';
+			// avatar.mv(path.resolve(__dirname, '..', 'static', fileName));
 			// const book = await Book.create({
 			// 	name,
 			// 	author,
@@ -190,9 +171,8 @@ class UserController {
 					employement: employement,
 					residence: residence,
 					about: aboutMe,
-					avatar: fileName,
 				},
-				{ where: { userId: 2 } },
+				{ where: { userId: 1 } },
 			);
 
 			res.json(status);

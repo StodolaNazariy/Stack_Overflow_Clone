@@ -1,6 +1,5 @@
 .reqistration_page {
-	width: 100vw;
-	height: 100vh;
+	padding: 10px;
 	.reqistration_page_form {
 		padding: 0px 20px;
 		display: flex;
@@ -22,7 +21,22 @@
 		}
 
 		.reqistration_page_input {
-			margin-top: 15px !important;
+			margin-top: 15px;
+			> *,
+			input,
+			div {
+				background: transparent;
+				color: #e6e8e9 !important;
+			}
+			input:-webkit-autofill,
+			input:-webkit-autofill:hover,
+			input:-webkit-autofill:focus,
+			input:-webkit-autofill:active {
+				transition: 5000s ease-in-out 0s;
+			}
+		}
+		.reqistration_page_submit {
+			margin-top: 20px;
 		}
 
 		.sign_up_link {

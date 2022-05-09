@@ -103,12 +103,7 @@ const QuestionPage = () => {
 									</div>
 								))}
 							</div>
-							<div className='question_full_title color_1'>
-								{question.title} Прежде чем перейти к практическому аспекту разработки,
-								обратимся к теоретическому понятию микросервисов. Прежде чем перейти к
-								практическому аспекту разработки, обратимся к теоретическому понятию
-								микросервисов.
-							</div>
+							<div className='question_full_title color_1'>{question.title}</div>
 							<div className='question_full_stats color_2 shadow_bottom_1'>
 								<div className='flex_row'>
 									<div>{stats.answersCount} answers</div>

@@ -1,4 +1,4 @@
-const SERVER_URI = 'http://localhost:5001';
+import { SERVER_URI } from 'config';
 
 const Fetch = async (url, method = 'GET', body, access = false) => {
 	try {

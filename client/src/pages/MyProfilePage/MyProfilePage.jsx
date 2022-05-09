@@ -19,8 +19,6 @@ const MyProfilePage = () => {
 		formData.append('employement', empoyement);
 		formData.append('residence', residence);
 		formData.append('aboutMe', aboutMe);
-		//console.log(formData.get('employement'));
-		//console.log('##############################');
 	};
 
 	const handleAddFile = event => {
@@ -28,8 +26,6 @@ const MyProfilePage = () => {
 		setAvatar(event.target.files[0]);
 	};
 
-	// <img src={`http://localhost:5000/${book.image}`} alt="book-img" />
-    
 	return (
 		<div className='my_profile_page'>
 			<div className='my_profile_avatar'>
@@ -39,7 +35,7 @@ const MyProfilePage = () => {
 			<div className='my_profile_info'>
 				<div className='my_profile_info_item'>
 					<span className='color_1'>Name</span>
-					<TextInput placeholder='Name' disabled={true} />
+					<TextInput placeholder='Name' disabled={true} styles='input_size_standard' />
 				</div>
 				<div className='my_profile_info_item'>
 					<span className='color_1'>Employement</span>
@@ -47,6 +43,7 @@ const MyProfilePage = () => {
 						placeholder='Employement'
 						value={empoyement}
 						onChange={event => setEmployement(event.target.value)}
+						styles='input_size_standard'
 					/>
 				</div>
 				<div className='my_profile_info_item'>
@@ -55,6 +52,7 @@ const MyProfilePage = () => {
 						placeholder='Residence'
 						value={residence}
 						onChange={event => setResidence(event.target.value)}
+						styles='input_size_standard'
 					/>
 				</div>
 			</div>

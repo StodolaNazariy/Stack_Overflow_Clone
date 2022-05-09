@@ -31,7 +31,7 @@
 .search_panel {
 	position: absolute;
 	top: 45px;
-	width: 1180px;
+	width: 1170px;
 	font-size: 14px;
 	padding: 5px 10px;
 	font-weight: 300;
@@ -39,7 +39,7 @@
 
 @media screen and (max-width: 1200px) {
 	.search_panel {
-		width: calc(100vw - 20px);
+		width: calc(100vw - 35px);
 	}
 }
 

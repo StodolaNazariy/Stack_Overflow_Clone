@@ -11,6 +11,7 @@ const MultipleSelect = ({ optionsToSelect, value, onChange, placeholder }) => {
 				onChange={onChange}
 				isMulti
 				name='tags'
+				isOptionDisabled={() => value.length >= 3}
 				className='multiple_select'
 				classNamePrefix='select'
 				options={optionsToSelect}
