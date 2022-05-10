@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { useNavigate, createSearchParams } from 'react-router-dom';
 import { useQueryParams } from 'utils';
+import { ROUTES, Tabs } from 'shared';
 import './FilterTabs.scss';
 
 const FilterTabs = () => {
@@ -9,7 +10,6 @@ const FilterTabs = () => {
 
 	const [query] = useQueryParams();
 
-	const Tabs = ['newest', 'popular', 'unanswered'];
 	const activeStyle = 'bg_3';
 	const passiveStyle = 'color_1 border_2';
 
@@ -23,7 +23,7 @@ const FilterTabs = () => {
 		});
 
 		navigate({
-			pathname: '/questions',
+			pathname: ROUTES.QUESTIONS,
 			search: `?${queryParams}`,
 		});
 	};

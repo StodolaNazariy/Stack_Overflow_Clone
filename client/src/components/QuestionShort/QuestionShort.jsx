@@ -1,5 +1,8 @@
 import React from 'react';
 import { useNavigate } from 'react-router-dom';
+import { convertDate } from 'utils';
+import { Tag, UserAvatar } from 'components';
+import { splittedTags } from 'utils';
 
 import './QuestionShort.scss';
 
@@ -17,11 +20,9 @@ const QuestionShort = ({
 }) => {
 	const navigate = useNavigate();
 
-	const default_avatar = process.env.PUBLIC_URL + '/icons/avatar_default.png';
-	const convertDate = dateISO => new Date(dateISO).toDateString();
-	const Tags = tags.split(' ');
+	const Tags = splittedTags(tags);
 
-	const handleNavigateToAuthor = event => {
+	const handleNavigateToAuthor = () => {
 		navigate(`/users/${userId}`);
 	};
 
@@ -33,12 +34,7 @@ const QuestionShort = ({
 		<div className='question_short shadow_bottom_1'>
 			<div className='question_short_info'>
 				<div className='qsi_user'>
-					<img
-						src={avatar || default_avatar}
-						alt=''
-						style={{ width: '24px', height: '24px' }}
-						onClick={handleNavigateToAuthor}
-					/>
+					<UserAvatar onClick={handleNavigateToAuthor} avatar={avatar} />
 					<div className='color_1' onClick={handleNavigateToAuthor}>
 						{name}
 					</div>
@@ -51,9 +47,7 @@ const QuestionShort = ({
 			</div>
 			<div className='question_short_tags'>
 				{Tags.map(tag => (
-					<div key={tag} className='q_tag color_1'>
-						{tag}
-					</div>
+					<Tag key={tag} tag={tag} />
 				))}
 			</div>
 			<div className='question_short_title color_3' onClick={handleNavigateToQuestion}>

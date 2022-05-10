@@ -7,6 +7,7 @@ const {
 	QuestionLikes,
 	UserProfile,
 } = require('../database/database');
+const { Utils } = require('../utils');
 
 class QuestionsController {
 	async createQuestion(req, res, next) {
@@ -28,24 +29,9 @@ class QuestionsController {
 
 	async getAllQuestions(req, res, next) {
 		try {
-			console.log('STUK TO GET QUESTIONS');
-			console.log(req.originalUrl);
-			console.log(req.query);
-
 			const { search, tag, tab } = req.query;
 
-			const checkTab = tab => {
-				const tabParam = {
-					newest: ['id', 'DESC'],
-					popular: [[Sequelize.col('likesCount'), 'DESC']],
-					unanswered: [[Sequelize.col('answersCount'), 'ASC']],
-				};
-
-				return tabParam[tab] || ['id', 'DESC'];
-			};
-
-			const tabParam = checkTab(tab);
-			console.log({ tabParam });
+			const tabParam = Utils.checkTab(tab);
 
 			const searchParam = search ? `%${search}%` : '%%';
 			const tagsParam = tag ? `%${tag}%` : '%%';
@@ -209,13 +195,8 @@ class QuestionsController {
 
 	async createAnswer(req, res, next) {
 		try {
-			console.log('###############################');
-			console.log('Stuk to create answer');
-			console.log('###############################');
 			const { id } = req.params;
 			const { answer } = req.body;
-
-			console.log('ansewer', answer);
 
 			const createdAnswer = await Answers.create({
 				answer: answer,

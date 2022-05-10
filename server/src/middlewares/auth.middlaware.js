@@ -1,34 +1,33 @@
 const { ErrorHandler } = require('../utils');
 const { Users, Auth } = require('../database/database');
 
-const checkAuth = async (req, res, next) => {
-	try {
-		console.log('---------------------------------');
-		console.log(' ');
-		console.log('Stuk to CHECK ACCESS TOKEN');
-		console.log(' ');
-		console.log(req.cookies);
-		console.log('---------------------------------');
+class AuthMiddleware {
+	async checkAuth(req, res, next) {
+		try {
+			const token = req.get('Authorization');
 
-		const token = req.get('Authorization');
+			const user = await Users.findOne({
+				attributes: ['id', 'email', 'name'],
+				include: [
+					{
+						model: Auth,
+						where: { access_token: token },
+						attributes: ['id', 'userId', 'role'],
+					},
+				],
+				raw: true,
+			});
 
-		const user = await Users.findOne({
-			attributes: ['id', 'email', 'name'],
-			include: [
-				{
-					model: Auth,
-					where: { access_token: token },
-					attributes: ['id', 'userId', 'role'],
-				},
-			],
-			raw: true,
-		});
+			if (!user) {
+				throw new ErrorHandler(401, 'Unauthorized');
+			}
 
-		req.currentUser = user;
-		next();
-	} catch (e) {
-		next(e);
+			req.currentUser = user;
+			next();
+		} catch (e) {
+			next(e);
+		}
 	}
-};
+}
 
-module.exports = checkAuth;
+module.exports = new AuthMiddleware();

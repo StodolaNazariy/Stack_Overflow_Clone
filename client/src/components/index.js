@@ -7,6 +7,9 @@ import QuestionShort from './QuestionShort/QuestionShort.jsx';
 import TextInput from './TextInput/TextInput.jsx';
 import TagCard from './TagCard/TagCard.jsx';
 import MultipleSelect from './MultipleSelect/MultipleSelect.jsx';
+import Tag from './Tag/Tag.jsx';
+import UserAvatar from './UserAvatar/UserAvatar.jsx';
+import TextEditor from './TextEditor/TextEditor.jsx';
 
 export {
 	Button,
@@ -18,4 +21,7 @@ export {
 	TextInput,
 	TagCard,
 	MultipleSelect,
+	Tag,
+	UserAvatar,
+	TextEditor,
 };

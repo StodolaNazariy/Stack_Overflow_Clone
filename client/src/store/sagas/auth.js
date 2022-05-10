@@ -26,7 +26,7 @@ const apiFetchDefineAuth = async () => {
 
 function* fetchDefineAuth() {
 	const auth = yield call(apiFetchDefineAuth);
-	console.log('define auth --> ', auth);
+	// console.log('define auth --> ', auth);
 	yield put(AuthCreator.defineAuth(auth));
 }
 
@@ -41,7 +41,7 @@ const apiFetchLogOut = async () => {
 
 function* fetchLogOut() {
 	const auth = yield call(apiFetchLogOut);
-	console.log('log out auth --> ', auth);
+	// console.log('log out auth --> ', auth);
 	yield put(AuthCreator.defineAuth(auth));
 }
 

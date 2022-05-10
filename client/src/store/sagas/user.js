@@ -6,7 +6,7 @@ import SagaActions from './actions';
 const apiFetchUserProfile = async payload => {
 	console.log('payload ----> ', payload);
 	const { data } = await Fetch(`/users/${payload}`);
-	console.log('fetched profile ---> ', data);
+	// console.log('fetched profile ---> ', data);
 	return data;
 };
 

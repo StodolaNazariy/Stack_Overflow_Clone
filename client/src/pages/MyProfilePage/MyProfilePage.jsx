@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Button, TextInput } from 'components';
+import { Button, TextInput, UserAvatar } from 'components';
 import './MyProfilePage.scss';
 
 const MyProfilePage = () => {
@@ -8,8 +8,6 @@ const MyProfilePage = () => {
 	const [empoyement, setEmployement] = useState('');
 	const [residence, setResidence] = useState('');
 	const [aboutMe, setAboutMe] = useState('');
-
-	const default_avatar = process.env.PUBLIC_URL + '/icons/avatar_default.png';
 
 	const handleSave = () => {
 		const formData = new FormData();
@@ -29,7 +27,7 @@ const MyProfilePage = () => {
 	return (
 		<div className='my_profile_page'>
 			<div className='my_profile_avatar'>
-				<img src={default_avatar} alt='' />
+				<UserAvatar size='big' />
 				<input type='file' onChange={handleAddFile} />
 			</div>
 			<div className='my_profile_info'>

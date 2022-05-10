@@ -14,7 +14,6 @@ const HomePage = () => {
 		if (errMessage) {
 			return;
 		}
-		console.log('fetched questions -----> ', data);
 		setQuestions(data);
 	}, [endPoint]);
 

@@ -21,10 +21,10 @@
 					display: flex;
 					flex-direction: row;
 					margin: 5px;
-					> img,
 					div {
 						cursor: pointer;
 					}
+
 					> :nth-child(2) {
 						margin-left: 5px;
 					}

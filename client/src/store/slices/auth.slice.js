@@ -19,7 +19,7 @@ const { reducer, actions } = createSlice({
 			state.user = action.payload.user;
 			state.isAuth = action.payload.isAuth;
 			state.role = action.payload.role;
-			console.log('state after', state.user);
+			// console.log('state after', state.user);
 		},
 	},
 });

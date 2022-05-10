@@ -36,7 +36,6 @@ module.exports = {
 			to: userEmail,
 			subject: 'Hello world',
 			html: html,
-			//html: '<h1>Test from Nazariy</h1>',
 		});
 	},
 };

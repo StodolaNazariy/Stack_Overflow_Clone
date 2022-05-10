@@ -4,8 +4,8 @@ import { useSelector, useDispatch } from 'react-redux';
 import { ThemeProvider } from 'styled-components';
 import { lightTheme, darkTheme, GlobalStyles } from 'config';
 import { Header, Footer } from 'components';
-import { Fetch } from 'utils';
 import SagaActions from 'store/sagas/actions';
+import { ROUTES } from 'shared';
 import {
 	HomePage,
 	NoMatchPage,
@@ -20,12 +20,12 @@ import {
 	QuestionPage,
 } from 'pages';
 
-const authURL = ['/sign-in', '/sign-up'];
+const authURL = [ROUTES.SIGN_IN, ROUTES.SIGN_UP];
 
 const App = () => {
 	const [isAuthPage, setIsOnAuthPage] = useState(false);
-	const auth = useSelector(state => state.auth);
 	const [theme, setTheme] = useState('light');
+	const auth = useSelector(state => state.auth);
 	const location = useLocation();
 	const dispatch = useDispatch();
 
@@ -34,7 +34,6 @@ const App = () => {
 	}, [location]);
 
 	useEffect(() => {
-		console.log('define auth');
 		dispatch({
 			type: SagaActions.DEFINE_AUTH,
 		});
@@ -51,24 +50,24 @@ const App = () => {
 				{!isAuthPage && <Header />}
 
 				<Routes>
-					<Route path='/sign-in' element={<LoginPage />} />
-					<Route path='/sign-up' element={<RegistrationPage />} />
-					<Route path='/' element={<HomePage />} />
-					<Route path='/tags' element={<TagsPage />} />
-					<Route path='/questions' element={<HomePage />} />
-					<Route path='/questions/:id' element={<QuestionPage />} />
-					<Route path='/users/:id' element={<UserPage />} />
+					<Route path={ROUTES.SIGN_IN} element={<LoginPage />} />
+					<Route path={ROUTES.SIGN_UP} element={<RegistrationPage />} />
+					<Route path={ROUTES.HOME} element={<HomePage />} />
+					<Route path={ROUTES.TAGS} element={<TagsPage />} />
+					<Route path={ROUTES.QUESTIONS} element={<HomePage />} />
+					<Route path={ROUTES.QUESTION} element={<QuestionPage />} />
+					<Route path={ROUTES.USER_PROFILE} element={<UserPage />} />
 
 					{auth.isAuth && (
 						<Fragment>
-							<Route path='/questions/create' element={<CreateQuestionPage />} />
-							<Route path='/settings' element={<SettingsPage />} />
-							<Route path='/bookmarks' element={<BookMarksPage />} />
-							<Route path='/profile' element={<MyProfilePage />} />
+							<Route path={ROUTES.QUESTION_CREATE} element={<CreateQuestionPage />} />
+							<Route path={ROUTES.SETTINGS} element={<SettingsPage />} />
+							<Route path={ROUTES.BOOKMARKS} element={<BookMarksPage />} />
+							<Route path={ROUTES.MY_PROFILE} element={<MyProfilePage />} />
 						</Fragment>
 					)}
 
-					<Route path='*' element={<NoMatchPage />} />
+					<Route path={ROUTES.NO_MATCH_PAGE} element={<NoMatchPage />} />
 				</Routes>
 
 				{!isAuthPage && <Footer />}

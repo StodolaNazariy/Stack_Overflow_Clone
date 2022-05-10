@@ -22,7 +22,6 @@ const UserPage = () => {
 		}
 	}, [id]);
 
-	console.log('params --->', id);
 	return (
 		<div className='user_profile_page'>
 			{Number(id) && user ? (

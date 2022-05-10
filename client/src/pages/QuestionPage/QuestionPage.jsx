@@ -1,10 +1,11 @@
 import React, { useEffect, useState, Fragment, useRef } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import { useSelector, useDispatch } from 'react-redux';
-import { Editor } from '@tinymce/tinymce-react';
-import { Button } from 'components';
+import { Button, Tag, UserAvatar, TextEditor } from 'components';
 import SagaActions from 'store/sagas/actions';
 import { Fetch } from 'utils';
+import { ROUTES } from 'shared';
+import { convertDate } from 'utils';
 import './QuestionPage.scss';
 
 const QuestionPage = () => {
@@ -23,8 +24,6 @@ const QuestionPage = () => {
 	const dispatch = useDispatch();
 
 	const endPoint = `${window.location.pathname}${window.location.search}`;
-	const default_avatar = process.env.PUBLIC_URL + '/icons/avatar_default.png';
-	const convertDate = dateISO => new Date(dateISO).toDateString();
 
 	useEffect(async () => {
 		const { data, errMessage } = await Fetch(endPoint);
@@ -45,11 +44,6 @@ const QuestionPage = () => {
 
 		setAnswers(data);
 	}, [endPoint]);
-	console.log('question ---> ', question);
-	console.log('error ---> ', errorQuestion);
-	console.log('author ---> ', author);
-	console.log('stats ---> ', stats);
-	console.log('answers ----> ', answers);
 
 	const handleNavigateToAuthor = () => {
 		navigate(`/users/${question.userId}`);
@@ -62,7 +56,7 @@ const QuestionPage = () => {
 	const handleSubmitNewAnswer = () => {
 		console.log('submit ---> ', newAnswer);
 		if (!isAuth) {
-			navigate('/sign-in');
+			navigate(ROUTES.SIGN_IN);
 			return;
 		}
 
@@ -83,12 +77,7 @@ const QuestionPage = () => {
 						<div className='question_full'>
 							<div className='question_full_author'>
 								<div className='question_full_author_info'>
-									<img
-										src={default_avatar}
-										alt=''
-										style={{ width: '24px', height: '24px' }}
-										onClick={handleNavigateToAuthor}
-									/>
+									<UserAvatar onClick={handleNavigateToAuthor} avatar={author.avatar} />
 									<div className='color_1' onClick={handleNavigateToAuthor}>
 										{author.name}
 									</div>
@@ -98,9 +87,7 @@ const QuestionPage = () => {
 							</div>
 							<div className='question_full_tags'>
 								{question.tags.split(' ').map(tag => (
-									<div key={tag} className='q_tag color_1'>
-										{tag}
-									</div>
+									<Tag key={tag} tag={tag} />
 								))}
 							</div>
 							<div className='question_full_title color_1'>{question.title}</div>
@@ -126,11 +113,9 @@ const QuestionPage = () => {
 									<div key={answer.createdAt} className='answer_full shadow_bottom_1'>
 										<div className='answer_full_author'>
 											<div className='answer_full_author_info'>
-												<img
-													src={default_avatar}
-													alt=''
-													style={{ width: '24px', height: '24px' }}
+												<UserAvatar
 													onClick={() => navigate(`/users/${answer.user.id}`)}
+													avatar={answer.user.avatar}
 												/>
 												<div className='color_1' onClick={handleNavigateToAuthor}>
 													{answer.user.name}
@@ -148,27 +133,10 @@ const QuestionPage = () => {
 							})}
 						</div>
 						<div className='create_new_answer'>
-							<Editor
-								onInit={(evt, editor) => (editorRef.current = editor)}
-								initialValue='<p>This is the initial content of the editor.</p>'
+							<TextEditor
+								editorRef={editorRef}
 								value={newAnswer}
-								onEditorChange={(newValue, editor) => setNewAnswer(newValue)}
-								apiKey='rn3dllt0qp3av8bbha4p4jo7rktjhrnwtlfu0f2pjl5ska38'
-								init={{
-									height: 500,
-									menubar: true,
-									statusbar: true,
-									toolbar:
-										'undo redo | formatselect | fontsizeselect | code |' +
-										'bold italic backcolor | alignleft aligncenter ' +
-										'alignright alignjustify | bullist numlist outdent indent | ' +
-										'removeformat | help',
-
-									fontsize_formats:
-										'8pt 9pt 10pt 11pt 12pt 14pt 18pt 24pt 30pt 36pt 48pt 60pt 72pt 96pt',
-									content_style:
-										'body { font-family:Helvetica,Arial,sans-serif; font-size:14px }',
-								}}
+								setValue={setNewAnswer}
 							/>
 
 							<Button

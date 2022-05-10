@@ -2,7 +2,7 @@ import React, { useState, useRef, useEffect } from 'react';
 import { useNavigate, createSearchParams } from 'react-router-dom';
 import { useSelector, useDispatch } from 'react-redux';
 import { useQueryParams } from 'utils';
-
+import { ROUTES, CONTENT } from 'shared';
 import { Button, NavMenu } from 'components/index';
 import MainLogo from './MainLogo/MainLogo';
 import OpenSearch from './OpenSearch/OpenSearch';
@@ -18,7 +18,6 @@ const Header = () => {
 	const Search = useRef(null);
 	const [query] = useQueryParams();
 
-	console.log('header is auth --> ', isAuth);
 	const userName = localStorage.getItem('user_name');
 
 	const handleOutsideClick = event => {
@@ -45,7 +44,7 @@ const Header = () => {
 			});
 
 			navigate({
-				pathname: '/questions',
+				pathname: ROUTES.QUESTIONS,
 				search: `?${queryParams}`,
 			});
 			setIsHiddenSearch(true);
@@ -56,7 +55,7 @@ const Header = () => {
 		}
 	};
 
-	const handleShowingSearch = event => {
+	const handleShowingSearch = () => {
 		setIsHiddenSearch(!isHiddenSearch);
 		if (setIsHiddenSearch) {
 			setTimeout(() => {
@@ -71,8 +70,10 @@ const Header = () => {
 		dispatch({
 			type: SagaActions.LOG_OUT,
 		});
-		navigate('/sign-in');
+		navigate(ROUTES.SIGN_IN);
 	};
+
+	const { button } = CONTENT;
 
 	return (
 		<div className='header shadow_bottom_1'>
@@ -86,17 +87,26 @@ const Header = () => {
 				{isAuth ? (
 					<div className='flex_row auth_btns' style={{ marginTop: '3px' }}>
 						<div className='color_1 welcome_user'>Hello {userName}</div>
-						<Button value='Log out' width='80px' onClick={handleLogOut} type='primary' />
+						<Button
+							value={button.log_out}
+							width='80px'
+							onClick={handleLogOut}
+							type='primary'
+						/>
 					</div>
 				) : (
 					<div className='flex_row auth_btns' style={{ marginTop: '3px' }}>
 						<Button
-							value='Sign in'
+							value={button.sign_in}
 							width='80px'
-							onClick={() => navigate('/sign-in')}
+							onClick={() => navigate(ROUTES.SIGN_IN)}
 							type='primary'
 						/>
-						<Button value='Sign up' width='80px' onClick={() => navigate('/sign-up')} />
+						<Button
+							value={button.sign_up}
+							width='80px'
+							onClick={() => navigate(ROUTES.SIGN_UP)}
+						/>
 					</div>
 				)}
 

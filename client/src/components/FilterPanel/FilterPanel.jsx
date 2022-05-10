@@ -2,6 +2,7 @@ import React from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useSelector } from 'react-redux';
 import { Button } from 'components';
+import { CONTENT, ROUTES } from 'shared';
 import FilterTabs from './FilterTabs/FilterTabs';
 
 import './FIlterPanel.scss';
@@ -11,7 +12,7 @@ const FilterPanel = () => {
 	const { isAuth } = useSelector(state => state.auth);
 
 	const handleNavigate = () => {
-		isAuth ? navigate('/questions/create') : navigate('/sign-in');
+		isAuth ? navigate(ROUTES.QUESTION_CREATE) : navigate(ROUTES.SIGN_IN);
 	};
 
 	return (
@@ -23,7 +24,7 @@ const FilterPanel = () => {
 
 			<div className='f_btn'>
 				<Button
-					value='Ask question'
+					value={CONTENT.button.ask_question}
 					onClick={handleNavigate}
 					type='secondary'
 					height='30px'
