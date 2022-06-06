@@ -1,6 +1,6 @@
 const jwt = require('jsonwebtoken');
 const { ErrorHandler } = require('../utils');
-const { ACCESS_TOKEN_SECRET, REFRESH_TOKEN_SECRET } =
+const { ACCESS_TOKEN_SECRET, REFRESH_TOKEN_SECRET, ACTION_TOKEN_SECRET } =
 	require('../configs').Params;
 
 module.exports = {
@@ -17,16 +17,32 @@ module.exports = {
 		};
 	},
 
-	verifyTokens: (token, tokenType = 'access') => {
+	verifyToken: (token, tokenType = 'access') => {
 		try {
-			const secret =
-				tokenType === 'access'
-					? ACCESS_TOKEN_SECRET
-					: REFRESH_TOKEN_SECRET;
+			let secret;
+			switch (tokenType) {
+				case 'access':
+					secret = ACCESS_TOKEN_SECRET;
+					break;
+				case 'action':
+					secret = ACTION_TOKEN_SECRET;
+					break;
+				case 'refresh':
+					secret = REFRESH_TOKEN_SECRET;
+					break;
+			}
+			// tokenType === 'access' ? ACCESS_TOKEN_SECRET : REFRESH_TOKEN_SECRET;
 
 			jwt.verify(token, secret);
 		} catch (e) {
 			throw new ErrorHandler(401, 'Invalid token');
 		}
+	},
+
+	generateActionToken: () => {
+		const action_token = jwt.sign({}, ACTION_TOKEN_SECRET, {
+			expiresIn: '5m',
+		});
+		return action_token;
 	},
 };

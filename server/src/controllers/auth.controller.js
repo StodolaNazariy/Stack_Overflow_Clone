@@ -1,6 +1,7 @@
 const ErrorHandler = require('../utils').ErrorHandler;
 const { jwtService } = require('../services');
 const { Users, Auth } = require('../database/database');
+const { STATUS_CODE } = require('../constants');
 
 class AuthController {
 	async defineUserAuth(req, res, next) {
@@ -8,10 +9,11 @@ class AuthController {
 			const token = req.get('Authorization');
 
 			if (!token) {
-				throw new ErrorHandler(401, 'No Access token');
+				throw new ErrorHandler(
+					STATUS_CODE.UNAUTHORIZED,
+					'No Access token',
+				);
 			}
-
-			console.log('POINT 1');
 
 			const userByAccessToken = await Users.findOne({
 				attributes: ['id', 'email', 'name'],
@@ -24,8 +26,6 @@ class AuthController {
 				],
 			});
 
-			console.log('POINT 2');
-
 			if (userByAccessToken) {
 				const { id, email, name, auth } = userByAccessToken;
 
@@ -34,15 +34,14 @@ class AuthController {
 					isAuth: true,
 					role: auth.role,
 				});
-
-				console.log('POINT 3');
 				return;
 			}
 
-			console.log('POINT 4');
-
 			if (!req.cookies['refresh_token']) {
-				throw new ErrorHandler(401, 'No refresh token');
+				throw new ErrorHandler(
+					STATUS_CODE.UNAUTHORIZED,
+					'No refresh token',
+				);
 			}
 
 			const userByRefreshToken = await Users.findOne({
@@ -57,16 +56,12 @@ class AuthController {
 				raw: true,
 			});
 
-			console.log('POINT 5');
-
 			if (
 				!userByRefreshToken ||
 				!userByAccessToken['auth.access_token']
 			) {
-				throw new ErrorHandler(401, 'Unauthorized');
+				throw new ErrorHandler(STATUS_CODE.UNAUTHORIZED, 'Unauthorized');
 			}
-
-			console.log('POINT 6');
 
 			const tokenPair = jwtService.generateTokenPair();
 

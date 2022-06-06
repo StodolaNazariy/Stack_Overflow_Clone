@@ -1,6 +1,7 @@
 const express = require('express');
 const fileUpload = require('express-fileupload');
 const cookieParser = require('cookie-parser');
+const morgan = require('morgan');
 const cors = require('cors');
 const path = require('path');
 
@@ -27,6 +28,7 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use(express.static(path.resolve(__dirname, 'static')));
 app.use(fileUpload({}));
+app.use(morgan('dev'));
 
 app.use('/', mainRouter);
 app.use('/tags', tagsRouter);

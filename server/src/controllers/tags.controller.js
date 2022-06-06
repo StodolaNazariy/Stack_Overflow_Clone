@@ -26,6 +26,26 @@ class TagsController {
 			next(e);
 		}
 	}
+
+	async deleteTag(req, res, next) {
+		try {
+			const { id } = req.params;
+
+			if (!Number(id)) {
+				throw new ErrorHandler(400, 'Invalid tag id paramater');
+			}
+
+			const tag = await Tags.findOne({ where: { id: id } });
+
+			if (!tag) {
+				throw new ErrorHandler(404, `Tag with id -> ${id} not found`);
+			}
+
+			await Tags.destroy(id);
+		} catch (e) {
+			next(e);
+		}
+	}
 }
 
 module.exports = new TagsController();

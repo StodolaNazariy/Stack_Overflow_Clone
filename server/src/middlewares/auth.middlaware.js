@@ -15,7 +15,6 @@ class AuthMiddleware {
 						attributes: ['id', 'userId', 'role'],
 					},
 				],
-				raw: true,
 			});
 
 			if (!user) {

@@ -1,6 +1,7 @@
 const { Sequelize } = require('sequelize');
 const ErrorHandler = require('../utils').ErrorHandler;
 const { jwtService, passwordService, emailService } = require('../services');
+const { EMAILS, STATUS_CODE } = require('../constants');
 const {
 	Users,
 	Auth,
@@ -27,8 +28,6 @@ class UserController {
 				UserProfile.create({ userId: user.id });
 			}
 
-			// await emailService.sendMail('onepiece.nazar@gmail.com');
-
 			res.status(200).json(user);
 		} catch (e) {
 			next(e);
@@ -48,11 +47,14 @@ class UserController {
 			});
 
 			if (!user) {
-				throw new ErrorHandler(404, 'User not found');
+				throw new ErrorHandler(STATUS_CODE.NOT_FOUND, 'User not found');
 			}
 
 			if (!(await passwordService.compare(password, user.password))) {
-				throw new ErrorHandler(400, 'Password is wrong');
+				throw new ErrorHandler(
+					STATUS_CODE.BAD_REQUEST,
+					'Password is wrong',
+				);
 			}
 
 			const tokenPair = jwtService.generateTokenPair();
@@ -60,6 +62,7 @@ class UserController {
 			await Auth.update({ ...tokenPair }, { where: { userId: user.id } });
 
 			delete user['password'];
+			await emailService.sendMail(user, EMAILS.LOGIN);
 
 			res.cookie('refresh_token', tokenPair.refresh_token, {
 				httpOnly: true,
@@ -96,7 +99,10 @@ class UserController {
 			});
 
 			if (!user) {
-				throw new ErrorHandler(404, `User with id = ${id} not found`);
+				throw new ErrorHandler(
+					STATUS_CODE.NOT_FOUND,
+					`User with id = ${id} not found`,
+				);
 			}
 
 			const user_profile = await UserProfile.findOne({
@@ -182,7 +188,6 @@ class UserController {
 
 	async logOut(req, res, next) {
 		try {
-			console.log('LOG OUT');
 			const { id } = req.currentUser;
 
 			await Auth.update(
@@ -197,6 +202,66 @@ class UserController {
 			});
 
 			res.status(200).json();
+		} catch (e) {
+			next(e);
+		}
+	}
+
+	async forgotPasswordRequest(req, res, next) {
+		try {
+			const { email } = req.body;
+
+			const user = await Users.findOne({ where: { email: email } });
+
+			if (!user) {
+				throw new ErrorHandler(
+					STATUS_CODE.NOT_FOUND,
+					'User with this email is not exist',
+				);
+			}
+
+			const actionToken = jwtService.generateActionToken();
+
+			await Auth.update(
+				{ action: actionToken },
+				{ where: { userId: user.id } },
+			);
+
+			res.status(STATUS_CODE.SUCCESS).json({ success: true });
+		} catch (e) {
+			next(e);
+		}
+	}
+
+	async acceptNewPassword(req, res, next) {
+		try {
+			const { token } = req.query;
+			const { password } = req.body;
+
+			const userByActionToken = await Users.findOne({
+				attributes: ['id', 'email', 'name'],
+				include: [
+					{
+						model: Auth,
+						where: { access_token: token },
+						attributes: ['id', 'userId', 'role'],
+					},
+				],
+			});
+
+			if (!userByActionToken) {
+				throw new ErrorHandler(
+					STATUS_CODE.BAD_REQUEST,
+					'Something goes wrong',
+				);
+			}
+
+			const hashPassword = await passwordService.hash(password);
+			await Users.update(
+				{ password: hashPassword },
+				{ where: { id: userByActionToken.id } },
+			);
+			res.status(STATUS_CODE.SUCCESS).json({});
 		} catch (e) {
 			next(e);
 		}

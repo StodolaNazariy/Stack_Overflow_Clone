@@ -1,8 +1,9 @@
 const nodemailer = require('nodemailer');
 const EmailTemplates = require('email-templates');
 const path = require('path');
-
+const { EmailUtil } = require('../utils');
 const { Environmet } = require('../configs');
+const { EMAIL_SUBJECTS } = require('../constants');
 
 //const pathToTemplates = path.join(process.cwd(), 'Email-Templates');
 const pathToTemplates = path.join(__dirname, '../email_templates');
@@ -22,19 +23,25 @@ const transporter = nodemailer.createTransport({
 });
 
 module.exports = {
-	sendMail: async userEmail => {
+	sendMail: async (user, email_type) => {
 		console.log('path to emails --->', pathToTemplates);
+		console.log('USER ---> ', user);
 
 		console.log('POINT FROM EMAIL SERVICE');
 
-		const html = await templateParser.render('welcome', {
-			userName: 'Igorechek',
+		const subject = EmailUtil.createSubject(
+			user.name,
+			EMAIL_SUBJECTS.SUCCESS_LOGIN,
+		);
+
+		const html = await templateParser.render(email_type, {
+			userName: user.name,
 		});
 
 		return transporter.sendMail({
-			from: 'No reply',
-			to: userEmail,
-			subject: 'Hello world',
+			from: Environmet.PROJECT_NAME,
+			to: user.email,
+			subject: subject,
 			html: html,
 		});
 	},
