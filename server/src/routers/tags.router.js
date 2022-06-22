@@ -5,7 +5,7 @@ const { roleMiddleware } = require('../middlewares');
 
 router.get('/', tagsController.getAllTags);
 
-router.post('/', roleMiddleware.checkRole('Admin'), tagsController.createTag);
+router.post('/', tagsController.createTag);
 router.delete(
 	'/id',
 	roleMiddleware.checkRole('Admin'),

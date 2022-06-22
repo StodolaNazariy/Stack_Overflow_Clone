@@ -62,12 +62,13 @@ class UserController {
 			await Auth.update({ ...tokenPair }, { where: { userId: user.id } });
 
 			delete user['password'];
-			await emailService.sendMail(user, EMAILS.LOGIN);
 
 			res.cookie('refresh_token', tokenPair.refresh_token, {
 				httpOnly: true,
 				secure: true,
 			});
+
+			await emailService.sendMail(user, EMAILS.LOGIN);
 
 			res.status(200).json({
 				access_token: tokenPair.access_token,

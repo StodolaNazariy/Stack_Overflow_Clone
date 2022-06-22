@@ -43,7 +43,7 @@ const NavMenu = () => {
 		<div className='nav_menu'>
 			<div className='nav_menu_trigger'>
 				<ListIcon sx={{ fontSize: 38 }} className='icon_fill_1' />
-				<div className='nav_menu_items shadow_all_1 '>
+				<div className='nav_menu_items shadow_all_1 app_bg'>
 					{navLinks.map(link => {
 						return (
 							<NavMenuLink

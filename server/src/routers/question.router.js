@@ -18,6 +18,6 @@ router.post(
 	questionController.createQuestion,
 );
 
-router.post('/like', questionController.likeQuestion);
+router.post('/like/:id', questionController.likeQuestion);
 
 module.exports = router;

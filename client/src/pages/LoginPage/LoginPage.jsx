@@ -28,6 +28,7 @@ const LoginPage = () => {
 		},
 		validationSchema: validationSchema,
 		onSubmit: async values => {
+			console.log('SUBMIT')
 			const { data, status, errMessage } = await Fetch('/sign-in', 'POST', values);
 			localStorage.clear();
 			console.log(data);

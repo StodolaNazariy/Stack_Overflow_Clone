@@ -9,8 +9,11 @@ export const lightTheme = {
 };
 
 export const darkTheme = {
-	body: '#363537',
-	text: '#FAFAFA',
-	toggleBorder: '#6B8096',
-	gradient: 'linear-gradient(#091236, #1E215D)',
+	body: 'linear-gradient(120deg, #e2e2e2 2%, #f1edf5 92%);',
+	primary: '#120907', // білий - стандарт
+	secondary: '#151e2a', // сірий
+	third: '#00b0c0', //бірюзовий
+	dark: '#2c3339',
+	toggleBorder: '#FFF',
+	gradient: 'linear-gradient(#39598A, #79D7ED)',
 };

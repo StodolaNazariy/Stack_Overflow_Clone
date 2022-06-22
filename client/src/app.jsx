@@ -24,13 +24,14 @@ const authURL = [ROUTES.SIGN_IN, ROUTES.SIGN_UP];
 
 const App = () => {
 	const [isAuthPage, setIsOnAuthPage] = useState(false);
-	const [theme, setTheme] = useState('light');
 	const auth = useSelector(state => state.auth);
 	const location = useLocation();
 	const dispatch = useDispatch();
 
 	useEffect(() => {
-		authURL.includes(location.pathname) ? setIsOnAuthPage(true) : setIsOnAuthPage(false);
+		authURL.includes(location.pathname)
+			? setIsOnAuthPage(true)
+			: setIsOnAuthPage(false);
 	}, [location]);
 
 	useEffect(() => {
@@ -39,10 +40,8 @@ const App = () => {
 		});
 	}, [location]);
 
-	console.log('auth ---> ', auth);
-
 	return (
-		<ThemeProvider theme={theme === 'light' ? lightTheme : darkTheme}>
+		<ThemeProvider theme={localStorage.getItem('theme') === 'light' ? darkTheme : lightTheme}>
 			<GlobalStyles />
 			<div className='app app_bg'>
 				<hr className='base_line' />
@@ -51,7 +50,10 @@ const App = () => {
 
 				<Routes>
 					<Route path={ROUTES.SIGN_IN} element={<LoginPage />} />
-					<Route path={ROUTES.SIGN_UP} element={<RegistrationPage />} />
+					<Route
+						path={ROUTES.SIGN_UP}
+						element={<RegistrationPage />}
+					/>
 					<Route path={ROUTES.HOME} element={<HomePage />} />
 					<Route path={ROUTES.TAGS} element={<TagsPage />} />
 					<Route path={ROUTES.QUESTIONS} element={<HomePage />} />
@@ -60,14 +62,29 @@ const App = () => {
 
 					{auth.isAuth && (
 						<Fragment>
-							<Route path={ROUTES.QUESTION_CREATE} element={<CreateQuestionPage />} />
-							<Route path={ROUTES.SETTINGS} element={<SettingsPage />} />
-							<Route path={ROUTES.BOOKMARKS} element={<BookMarksPage />} />
-							<Route path={ROUTES.MY_PROFILE} element={<MyProfilePage />} />
+							<Route
+								path={ROUTES.QUESTION_CREATE}
+								element={<CreateQuestionPage />}
+							/>
+							<Route
+								path={ROUTES.SETTINGS}
+								element={<SettingsPage />}
+							/>
+							<Route
+								path={ROUTES.BOOKMARKS}
+								element={<BookMarksPage />}
+							/>
+							<Route
+								path={ROUTES.MY_PROFILE}
+								element={<MyProfilePage />}
+							/>
 						</Fragment>
 					)}
 
-					<Route path={ROUTES.NO_MATCH_PAGE} element={<NoMatchPage />} />
+					<Route
+						path={ROUTES.NO_MATCH_PAGE}
+						element={<NoMatchPage />}
+					/>
 				</Routes>
 
 				{!isAuthPage && <Footer />}

@@ -114,7 +114,7 @@ const Header = () => {
 					value={search}
 					ref={Search}
 					type='text'
-					className={`search_panel color_1 bg_dark border_3 ${
+					className={`search_panel color_1 app_bg border_3 ${
 						isHiddenSearch ? 'hide_search' : 'show_search'
 					}`}
 					onChange={handleSearchChange}

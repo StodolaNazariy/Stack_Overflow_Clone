@@ -212,8 +212,9 @@ class QuestionsController {
 
 	async likeQuestion(req, res, next) {
 		try {
+			const { id } = req.params;
 			const [like, created] = await QuestionLikes.findOrCreate({
-				where: { userId: 2, questionId: 2 },
+				where: { userId: 1, questionId: id },
 			});
 			res.json({ done: true });
 		} catch (e) {
