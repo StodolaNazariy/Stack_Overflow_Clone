@@ -31,7 +31,6 @@ module.exports = {
 					secret = REFRESH_TOKEN_SECRET;
 					break;
 			}
-			// tokenType === 'access' ? ACCESS_TOKEN_SECRET : REFRESH_TOKEN_SECRET;
 
 			jwt.verify(token, secret);
 		} catch (e) {

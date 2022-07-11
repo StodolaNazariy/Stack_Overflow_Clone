@@ -1,32 +1,12 @@
 import React, { useState, useEffect } from 'react';
 import './TagCard.scss';
 
-const checkLeftPosition = (offset, tagWidth) => {
-	const vw = window.innerWidth;
-	let left;
-	if (offset < 200) {
-		left = -(200 - tagWidth - 10);
-	}
-	if (offset > vw - 200) {
-		left = (200 - (vw - offset)) / 2 - 20 - tagWidth;
-	}
-	if (offset > 200 && offset < vw - 200) {
-		left = -((200 - tagWidth) / 2);
-	}
-	return left || 0;
-};
-
 const TagCard = ({ tag: { id, name, description }, handleClick }) => {
 	const [posX, setPosX] = useState(0);
 
 	const handleMouseOver = event => {
 		event.stopPropagation();
-
-		const tagWidth = event.target.clientWidth;
-		const offset = window.innerWidth - event.clientX;
-
-		const left = checkLeftPosition(offset, tagWidth);
-		setPosX(left);
+		// TODO fix ligoc
 	};
 
 	return (
