@@ -1,0 +1,29 @@
+version: '3.3'
+
+services:
+    app:
+        restart: always
+        build: 
+          context: .
+          dockerfile: ./Dockerfile
+        ports:
+          - 3001:3001
+          - 3000:3000
+          - 5000:5000
+        env_file:
+          - ./server/.env
+        depends_on:
+          - mysql
+        volumes:
+          - ./server/src:/app/server/src
+          - ./client/src:/app/client/src
+    
+    mysql:
+        image: 'mysql:8'
+        env_file:
+            - ./server/.env
+        ports:
+            - '3306:3306'
+        volumes:
+          - ~/apps/mysql:/var/lib/mysql
+          

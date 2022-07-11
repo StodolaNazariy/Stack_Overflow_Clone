@@ -19,8 +19,9 @@ const {
 } = require('./models');
 
 const sequelize = new Sequelize(DB_NAME, DB_LOGIN, DB_PASSWORD, {
-	host: DB_HOST,
+	host: "localhost",
 	dialect: DB_DIALECT,
+	port: "3306"
 });
 
 const Auth = createAuthModel(sequelize);
@@ -63,9 +64,9 @@ const checkConnect = async () => {
 	try {
 		await sequelize.authenticate();
 
-		// sequelize.sync({ force: true }).then(() => {
-		// 	console.log('Drop and re-sync db.');
-		// });
+		sequelize.sync({ force: true }).then(() => {
+			console.log('Drop and re-sync db.');
+		});
 
 		console.log('-----------------------------------------------------');
 		console.log('Connected successfully.');
